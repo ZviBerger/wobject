@@ -1,0 +1,24 @@
+{
+  "name": "wobject",
+  "version": "1.0.0",
+  "description": "An OOP framework for building web interfaces",
+  "main": ".mongorc.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZviBerger/wobject.git"
+  },
+  "keywords": [
+    "wobject"
+  ],
+  "author": "Zvika Berger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ZviBerger/wobject/issues"
+  },
+  "homepage": "https://github.com/ZviBerger/wobject#readme"
+}

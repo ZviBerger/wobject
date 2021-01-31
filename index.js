@@ -19,39 +19,42 @@ class TextBox extends WObject{
 
 let width = 2000;
 let app   = new WOApp("myCanvas",10000)
+/*
 let root  = new WObject(10,10,300,300,getRandomColor());
 root.addElement(new WObject(30,15,30,30,"green"));
 root.addElement(new WObject(60,15,30,30,"yellow"));
 root.addElement(new WObject(90,15,30,30,"black"));
 root.addElement(new WObject(120,15,30,30,"red"));
 root.addElement(new TextBox(0,10,100,100,"white","This is The Box!"));
+*/
 
-//let bigContainer=  new WOHorizontalContainer(10,10,1500,90,"White");
-//bigContainer.setMargin(100,15,0,0);
+let bigContainer=  new WOHorizontalContainer(10,10,1500,130,"White");
+bigContainer.setMargin(50,15,0,0);
 
-let container = new WOHorizontalContainer(0,0,600,60,"White");
+let container = new WOHorizontalContainer(0,0,600,80,"White");
+let container1 = new WOHorizontalContainer(0,0,600,80,"White");
+bigContainer.addElement(container)
+bigContainer.addElement(container1)
+container.setMargin(40,5,0,0);
+console.log("position",container.position)
+container.addElement(new WObject(0,0,50,50,getRandomColor()));
+container.addElement(new WObject(0,0,50,50,getRandomColor()));
+container.addElement(new WObject(0,0,50,50,getRandomColor()));
+container.addElement(new WObject(0,0,60,50,getRandomColor()));
+container.addElement(new WObject(0,0,50,50,getRandomColor()));
+container.addElement(new WObject(0,0,50,50,getRandomColor()));
+//container.addElement(new WObject(0,0,50,50,getRandomColor()));
 
-container.setMargin(40,15,0,0);
-container.addElement(new WObject(0,0,50,50,getRandomColor()));
-container.addElement(new WObject(0,0,50,50,getRandomColor()));
-container.addElement(new WObject(0,0,50,50,getRandomColor()));
-container.addElement(new WObject(0,0,50,50,getRandomColor()));
-container.addElement(new WObject(0,0,50,50,getRandomColor()));
-container.addElement(new WObject(0,0,50,50,getRandomColor()));
 
-
-let container1 = new WOHorizontalContainer(0,80,600,60,"White");
-container1.setMargin(40,15,0,0);
+container1.setMargin(40,5,0,0);
 container1.addElement(new WObject(0,0,50,50,getRandomColor()));
 container1.addElement(new WObject(0,0,50,50,getRandomColor()));
 container1.addElement(new WObject(0,0,50,50,getRandomColor()));
 container1.addElement(new WObject(0,0,50,50,getRandomColor()));
 container1.addElement(new WObject(0,0,50,50,getRandomColor()));
 //container1.addElement(new WObject(0,0,50,50,getRandomColor()));
-/*
-bigContainer.addElement(container);
-bigContainer.addElement(container1);
-*/
+
+
 let root2 = new WObject(10,320,300,300,getRandomColor());
 let box1 = new WObject(0,0,255,255,getRandomColor());
 box1.setMargin(10,20,0,0)
@@ -73,6 +76,6 @@ let root3 = new WObject(0,310,300,300,getRandomColor());
 
 
 //app.addElement(root);
-app.addElement(container1);
-app.addElement(container);
+//app.addElement(container1);
+app.addElement(bigContainer);
 app.run()

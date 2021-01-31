@@ -17,6 +17,9 @@ export class WObject{
             element.update();
         });
     }
+    getFullWidth(){
+        return this.margin.left+this.size.width+this.margin.right;
+    }
 
     adoptPosition(position){
         this.position.x+=position.x;
@@ -25,6 +28,11 @@ export class WObject{
 
     setMargin(left,top,right,bottom){
         this.margin.set(left,top,right,bottom); 
+    }
+    reOrganize(){
+        this.elements.forEach(element => {
+            element.reOrganize(this.position);
+        });
     }
 
     addElement(s){
@@ -62,9 +70,15 @@ export class WOApp{
             element.update();
         });
     }
+    reOrganize(){
+        this.elements.forEach((element)=>{
+            element.reOrganize(element.position);
+        })
+    }
 
     addElement(element){
         this.elements.push(element);
+        this.reOrganize(element.position);
     }
 
     display(){

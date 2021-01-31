@@ -40,3 +40,12 @@ export class WOSize{
         this.high   = high;
     }
 }
+
+export class WOFrame{
+    constructor(topLeft,topRight,bottomLeft,bottomRight){
+        this.topLeft      = topLeft;
+        this.topRight     = topRight;
+        this.bottomLeft   = bottomLeft;
+        this.bottomRight  = bottomRight;
+    }
+}

@@ -1,6 +1,7 @@
 import {getRandomColor} from "./utility.js"
-import { WObject, WOApp} from "./engine.js"
-import {WOHorizontalContainer} from "./containers.js"
+import { WObject} from "./engine.js"
+import { WOApp } from "./wobject.js"
+import {WOHorizontalContainer,WOVerticalContainer} from "./containers.js"
 
 class TextBox extends WObject{
     constructor(x,y,w,h,color,text)
@@ -18,7 +19,7 @@ class TextBox extends WObject{
 
 
 let width = 2000;
-let app   = new WOApp("myCanvas",10000)
+let app   = new WOApp("myCanvas",2000)
 /*
 let root  = new WObject(10,10,300,300,getRandomColor());
 root.addElement(new WObject(30,15,30,30,"green"));
@@ -77,5 +78,15 @@ let root3 = new WObject(0,310,300,300,getRandomColor());
 
 //app.addElement(root);
 //app.addElement(container1);
+let verticalContainer =    new WOVerticalContainer(10,250,80,600)
+verticalContainer.setMargin(5,30,3,3)
+verticalContainer.addElement(new WObject(5,0,50,50,getRandomColor()))
+verticalContainer.addElement(new WObject(5,0,50,50,getRandomColor()))
+verticalContainer.addElement(new WObject(5,0,50,50,getRandomColor()))
+verticalContainer.addElement(new WObject(5,0,50,50,getRandomColor()))
+verticalContainer.addElement(new WObject(5,0,50,50,getRandomColor()))
+verticalContainer.addElement(new WObject(5,0,50,50,getRandomColor()))
+verticalContainer.addElement(new WObject(5,0,50,50,getRandomColor()))
 app.addElement(bigContainer);
+app.addElement(verticalContainer)
 app.run()

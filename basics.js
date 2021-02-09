@@ -34,6 +34,21 @@ export class WOMargin{
         this.bottom = bottom;  
     }
 }
+
+export class WOPadding{
+    constructor(){
+        this.left   = 0;
+        this.top    = 0;
+        this.right  = 0;
+        this.bottom = 0;  
+    }
+    set(left,top,right,bottom){
+        this.left   = left;
+        this.top    = top; 
+        this.right  = right;
+        this.bottom = bottom;  
+    }
+}
 export class WOSize{
     constructor(width,high){
         this.width  = width;
@@ -47,5 +62,16 @@ export class WOFrame{
         this.topRight     = topRight;
         this.bottomLeft   = bottomLeft;
         this.bottomRight  = bottomRight;
+    }
+}
+
+export class WOMotion{
+    set(dX,dY,radius){
+        this.dX=dx;
+        this.dY=dY;
+        this.radius=radius;
+    }
+    setRadius(radius){
+        this.radius=radius;
     }
 }

@@ -1,0 +1,83 @@
+import {WOMargin,WOPosition,WOSize, WOPadding, WOMotion} from "./basics.js"
+import {getRandomColor} from "./utility.js"
+
+
+export class WObject{
+
+    elements:   Array<WObject>;
+    position:   WOPosition;
+    originPos:  WOPosition;
+    size:       WOSize;
+    margin:     WOMargin;
+    padding:    WOPadding;
+    motion:     WOMotion;
+    color:      string;
+
+    constructor(x,y,w,h,color){
+        this.elements  = [];
+        this.position  = new WOPosition(x,y);
+        this.originPos = new WOPosition(x,y);
+        this.size      = new WOSize(w,h);
+        this.margin    = new WOMargin();
+        this.padding   = new WOPadding();
+        this.motion    = new WOMotion();
+        this.color     = color;
+    
+    }
+    update(){
+        this.color=getRandomColor();
+        this.elements.forEach(element => {
+            element.update();
+        });
+    }
+    getFullWidth(){
+        return this.margin.left+this.size.width+this.margin.right;
+    }
+    getFullHeight(){
+        return this.margin.top+ this.size.high+ this.margin.bottom;
+    }
+    adoptPosition(position){
+        this.position.x+=position.x;
+        this.position.y+=position.y;
+    }
+
+    setMargin(left,top,right,bottom){
+        this.margin.set(left,top,right,bottom); 
+    }
+    setPadding(left,top,right,bottom){
+        this.padding.set(left,top,right,bottom); 
+    }
+    reOrganize(position){
+        
+        this.elements.forEach(element => {
+            element.reOrganize(position ?? this.position);
+        });
+    }
+
+    addElement(s){
+        s.adoptPosition(this.position);
+        this.elements.push(s);
+    }
+
+    display(context){
+        // a default displaying
+        //override the functionality by extending this class
+        context.clearRect(this.position.x, this.position.y,  this.size.width,this.size.high);
+        context.beginPath();
+        context.lineWidth    = "1";
+        context.fillStyle    = this.color;
+        context.shadowColor  = "#666565";
+        context.strokeStyle  = this.color;
+        context.shadowBlur   = 10;
+        context.fillRect(this.position.x, this.position.y,  this.size.width,this.size.high);
+        context.stroke();
+        this.elements.forEach(element => {
+            element.display(context);
+        });
+    }
+}
+
+/*
+ X := originX + cos(angle)*radius;
+ Y := originY + sin(angle)*radius;
+*/

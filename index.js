@@ -2,6 +2,7 @@ import { getRandomColor } from "./utility.js";
 import { WObject } from "./engine.js";
 import { WOApp } from "./wobject.js";
 import { WOMotion } from "./basics.js";
+import { moveInCircle } from "./movements.js";
 import { WOHorizontalContainer, WOVerticalContainer } from "./containers.js";
 
 class TextBox extends WObject {
@@ -35,23 +36,16 @@ let container = new WOHorizontalContainer(0, 0, 600, 80, "White");
 let container1 = new WOHorizontalContainer(0, 0, 600, 80, "White");
 bigContainer.addElement(container);
 bigContainer.addElement(container1);
+
 container.setMargin(40, 5, 0, 0);
 let el = new WObject(0, 0, 50, 50, getRandomColor());
-
-/*
- X := originX + cos(angle)*radius;
- Y := originY + sin(angle)*radius;
-*/
 let motion = new WOMotion();
 motion.set(0, 0);
 motion.setRadius(20);
 el.setMotion(motion);
-el.setMotionMethod((mo) => {
-  (mo.dX = Math.cos(mo.angel) * 1), (mo.dY = Math.sin(mo.angel) * 1);
-  mo.angel += 0.04;
-  return mo;
-});
+el.setMotionMethod(moveInCircle(1, 0.04));
 container.addElement(el);
+
 container.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
 container.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
 container.addElement(new WObject(0, 0, 60, 50, getRandomColor()));

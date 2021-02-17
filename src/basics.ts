@@ -1,29 +1,42 @@
 export class WOStore {
+  data: object;
   constructor() {
     this.data = {};
   }
 }
 
 export class WOPosition {
+  x: number;
+  y: number;
   constructor(x, y) {
     this.x = x;
     this.y = y;
   }
-  adapt(motion) {
+  adapt(motion: WOMotion) {
     this.x += motion.dX;
     this.y += motion.dY;
   }
 }
 
 export class WORect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+
   constructor(x, y, w, h) {
     this.x = x;
     this.y = y;
     this.width = w;
-    this.weight = h;
+    this.height = h;
   }
 }
 export class WOMargin {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+
   constructor() {
     this.left = 0;
     this.top = 0;
@@ -39,6 +52,11 @@ export class WOMargin {
 }
 
 export class WOPadding {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+
   constructor() {
     this.left = 0;
     this.top = 0;
@@ -53,6 +71,9 @@ export class WOPadding {
   }
 }
 export class WOSize {
+  width: number;
+  high: number;
+
   constructor(width, high) {
     this.width = width;
     this.high = high;
@@ -60,6 +81,10 @@ export class WOSize {
 }
 
 export class WOFrame {
+  topLeft: number;
+  topRight: number;
+  bottomLeft: number;
+  bottomRight: number;
   constructor(topLeft, topRight, bottomLeft, bottomRight) {
     this.topLeft = topLeft;
     this.topRight = topRight;
@@ -69,6 +94,11 @@ export class WOFrame {
 }
 
 export class WOMotion {
+  dX: number;
+  dY: number;
+  radius: number;
+  angel: number;
+
   constructor() {
     this.dX = 0;
     this.dY = 0;

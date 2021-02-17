@@ -1,9 +1,12 @@
-import { getRandomColor } from "./utility.js";
-import { WObject } from "./engine.js";
-import { WOApp } from "./wobject.js";
-import { WOMotion } from "./basics.js";
-import { moveInCircle } from "./movements.js";
-import { WOHorizontalContainer, WOVerticalContainer } from "./containers.js";
+import { getRandomColor } from "./out/utility.js";
+import { WObject } from "./out/engine.js";
+import { WOApp } from "./out/wobject.js";
+import { WOMotion } from "./out/basics.js";
+import { moveInCircle } from "./out/movements.js";
+import {
+  WOHorizontalContainer,
+  WOVerticalContainer,
+} from "./out/containers.js";
 
 class TextBox extends WObject {
   constructor(x, y, w, h, color, text) {

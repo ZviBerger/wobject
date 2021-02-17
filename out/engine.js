@@ -18,7 +18,7 @@ export class WObject {
             this.position.adapt(newMotion);
             this.motion = newMotion;
         }
-        this.elements.forEach(element => {
+        this.elements.forEach((element) => {
             element.update();
         });
     }
@@ -45,7 +45,7 @@ export class WObject {
         this.padding.set(left, top, right, bottom);
     }
     reOrganize(position) {
-        this.elements.forEach(element => {
+        this.elements.forEach((element) => {
             element.reOrganize(position !== null && position !== void 0 ? position : this.position);
         });
     }
@@ -65,7 +65,7 @@ export class WObject {
         context.shadowBlur = 10;
         context.fillRect(this.position.x, this.position.y, this.size.width, this.size.high);
         context.stroke();
-        this.elements.forEach(element => {
+        this.elements.forEach((element) => {
             element.display(context);
         });
     }

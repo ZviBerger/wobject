@@ -6,7 +6,9 @@ export class WOContainer extends WObject {
         this.lastElementWidth = x;
     }
     reOrganize(position) { }
-    isFull(element) { return false; }
+    isFull(element) {
+        return false;
+    }
 }
 export class WOHorizontalContainer extends WOContainer {
     constructor(x, y, w, h, color) {
@@ -27,7 +29,7 @@ export class WOHorizontalContainer extends WOContainer {
         leftSpace += position.x;
         let lastEnd = (_a = position.x) !== null && _a !== void 0 ? _a : 0;
         this.elements.forEach((element, i) => {
-            element.position.x = (i == 0) ? leftSpace : lastEnd + this.margin.left;
+            element.position.x = i == 0 ? leftSpace : lastEnd + this.margin.left;
             lastEnd = element.position.x + element.size.width;
             element.reOrganize(element.position);
         });
@@ -43,7 +45,8 @@ export class WOHorizontalContainer extends WOContainer {
         let lastElementX = (_a = lastElement.position.x) !== null && _a !== void 0 ? _a : this.position.x;
         let lastElementWidth = (_b = lastElement.size.width) !== null && _b !== void 0 ? _b : 0;
         let endWithMargin = lastElementX + lastElementWidth + ((_c = lastElement.margin.right) !== null && _c !== void 0 ? _c : 0);
-        return endWithMargin + element.size.getFullWidth() > this.position.x + this.size.width;
+        return (endWithMargin + element.size.getFullWidth() >
+            this.position.x + this.size.width);
     }
 }
 export class WOVerticalContainer extends WOContainer {
@@ -63,7 +66,7 @@ export class WOVerticalContainer extends WOContainer {
         topSpace += position.y;
         let lastEnd = position ? position.y : 0;
         this.elements.forEach((element, i) => {
-            element.position.y = (i == 0) ? topSpace : lastEnd + this.margin.top;
+            element.position.y = i == 0 ? topSpace : lastEnd + this.margin.top;
             lastEnd = element.position.y + element.size.high;
             element.reOrganize(element.position);
         });

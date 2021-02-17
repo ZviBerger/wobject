@@ -1,5 +1,4 @@
 import { WOMargin, WOPosition, WOSize, WOPadding, WOMotion } from "./basics.js";
-import { getRandomColor } from "./utility.js";
 export class WObject {
     constructor(x, y, w, h, color) {
         this.elements = [];
@@ -10,9 +9,15 @@ export class WObject {
         this.padding = new WOPadding();
         this.motion = new WOMotion();
         this.color = color;
+        //  this.motionMethods  = (motion: WOMotion) => new WOMotion();
     }
     update() {
-        this.color = getRandomColor();
+        //this.color=getRandomColor();
+        if (this.motionMethods) {
+            let newMotion = this.motionMethods(this.motion);
+            this.position.adapt(newMotion);
+            this.motion = newMotion;
+        }
         this.elements.forEach(element => {
             element.update();
         });
@@ -22,6 +27,12 @@ export class WObject {
     }
     getFullHeight() {
         return this.margin.top + this.size.high + this.margin.bottom;
+    }
+    setMotionMethod(motionMethods) {
+        this.motionMethods = motionMethods;
+    }
+    setMotion(motion) {
+        this.motion = motion;
     }
     adoptPosition(position) {
         this.position.x += position.x;
@@ -59,8 +70,4 @@ export class WObject {
         });
     }
 }
-/*
- X := originX + cos(angle)*radius;
- Y := originY + sin(angle)*radius;
-*/ 
 //# sourceMappingURL=engine.js.map

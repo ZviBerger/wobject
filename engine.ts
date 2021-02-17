@@ -12,30 +12,45 @@ export class WObject{
     padding:    WOPadding;
     motion:     WOMotion;
     color:      string;
+    motionMethods: (motion: WOMotion) => WOMotion;
 
     constructor(x,y,w,h,color){
-        this.elements  = [];
-        this.position  = new WOPosition(x,y);
-        this.originPos = new WOPosition(x,y);
-        this.size      = new WOSize(w,h);
-        this.margin    = new WOMargin();
-        this.padding   = new WOPadding();
-        this.motion    = new WOMotion();
-        this.color     = color;
+        this.elements       = [];
+        this.position       = new WOPosition(x,y);
+        this.originPos      = new WOPosition(x,y);
+        this.size           = new WOSize(w,h);
+        this.margin         = new WOMargin();
+        this.padding        = new WOPadding();
+        this.motion         = new WOMotion();
+        this.color          = color;
+      //  this.motionMethods  = (motion: WOMotion) => new WOMotion();
     
     }
     update(){
-        this.color=getRandomColor();
+        //this.color=getRandomColor();
+        if(this.motionMethods){
+            let newMotion = this.motionMethods(this.motion);
+            this.position.adapt(newMotion);
+            this.motion = newMotion;
+        }
         this.elements.forEach(element => {
             element.update();
         });
     }
     getFullWidth(){
-        return this.margin.left+this.size.width+this.margin.right;
+        return this.margin.left + this.size.width + this.margin.right;
     }
     getFullHeight(){
-        return this.margin.top+ this.size.high+ this.margin.bottom;
+        return this.margin.top + this.size.high + this.margin.bottom;
     }
+    setMotionMethod(motionMethods: (motion: WOMotion) => WOMotion){
+        this.motionMethods = motionMethods;
+    }
+
+    setMotion(motion: WOMotion){
+        this.motion = motion;
+    }
+
     adoptPosition(position){
         this.position.x+=position.x;
         this.position.y+=position.y;
@@ -77,7 +92,3 @@ export class WObject{
     }
 }
 
-/*
- X := originX + cos(angle)*radius;
- Y := originY + sin(angle)*radius;
-*/

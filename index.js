@@ -1,13 +1,13 @@
 import { getRandomColor } from "./out/utility.js";
 import { WObject } from "./out/engine.js";
 import { WOApp } from "./out/wobject.js";
-import { WOMotion } from "./out/basics.js";
-import { moveInCircle } from "./out/movements.js";
+import { WORect, WOCircle } from "./out/shapes.js";
+import { moveInCircle, moveInLine } from "./out/movements.js";
 import {
   WOHorizontalContainer,
   WOVerticalContainer,
 } from "./out/containers.js";
-
+import { WOCollidersContainer } from "./out/colliders.js";
 class TextBox extends WObject {
   constructor(x, y, w, h, color, text) {
     super(x, y, w, h, color);
@@ -22,7 +22,7 @@ class TextBox extends WObject {
 }
 
 let width = 2000;
-let app = new WOApp("myCanvas", 10);
+let app = new WOApp("myCanvas", 100);
 /*
 let root  = new WObject(10,10,300,300,getRandomColor());
 root.addElement(new WObject(30,15,30,30,"green"));
@@ -41,37 +41,34 @@ bigContainer.addElement(container);
 bigContainer.addElement(container1);
 
 container.setMargin(40, 5, 0, 0);
-let el = new WObject(0, 0, 50, 50, getRandomColor());
-let motion = new WOMotion();
-motion.set(0, 0);
-motion.setRadius(20);
-el.setMotion(motion);
-el.setMotionMethod(moveInCircle(1, 0.04));
+let el = new WORect(0, 0, 50, 50, getRandomColor());
+el.setMotionMethod(moveInCircle(0.5, 0.04));
 container.addElement(el);
 
-container.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
-container.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
-container.addElement(new WObject(0, 0, 60, 50, getRandomColor()));
-container.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
-container.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
-//container.addElement(new WObject(0,0,50,50,getRandomColor()));
+let lineMovingObj = new WORect(0, 0, 50, 50, getRandomColor());
+lineMovingObj.setMotionMethod(moveInLine(0.3, 0.3));
+//container.addElement(lineMovingObj);
+container.addElement(new WORect(0, 0, 50, 50, getRandomColor()));
+container.addElement(new WORect(0, 0, 60, 50, getRandomColor()));
+container.addElement(new WORect(0, 0, 50, 50, getRandomColor()));
+container.addElement(new WORect(0, 0, 50, 50, getRandomColor()));
 
 container1.setMargin(40, 5, 0, 0);
-container1.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
-container1.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
-container1.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
-container1.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
-container1.addElement(new WObject(0, 0, 50, 50, getRandomColor()));
+container1.addElement(new WORect(0, 0, 50, 50, getRandomColor()));
+container1.addElement(new WORect(0, 0, 50, 50, getRandomColor()));
+container1.addElement(new WORect(0, 0, 50, 50, getRandomColor()));
+container1.addElement(new WORect(0, 0, 50, 50, getRandomColor()));
+container1.addElement(new WORect(0, 0, 50, 50, getRandomColor()));
 //container1.addElement(new WObject(0,0,50,50,getRandomColor()));
 
-let root2 = new WObject(10, 320, 300, 300, getRandomColor());
-let box1 = new WObject(0, 0, 255, 255, getRandomColor());
+let root2 = new WORect(10, 320, 300, 300, getRandomColor());
+let box1 = new WORect(0, 0, 255, 255, getRandomColor());
 box1.setMargin(10, 20, 0, 0);
-let box2 = new WObject(0, 0, 230, 230, getRandomColor());
+let box2 = new WORect(0, 0, 230, 230, getRandomColor());
 box2.setMargin(10, 20, 0, 0);
-let box3 = new WObject(0, 0, 200, 200, getRandomColor());
+let box3 = new WORect(0, 0, 200, 200, getRandomColor());
 box3.setMargin(10, 20, 0, 0);
-let box4 = new WObject(0, 0, 150, 150, getRandomColor());
+let box4 = new WORect(0, 0, 150, 150, getRandomColor());
 box4.setMargin(10, 20, 0, 0);
 
 root2.addElement(box1);
@@ -79,19 +76,27 @@ box1.addElement(box2);
 box2.addElement(box3);
 box3.addElement(box4);
 
-let root3 = new WObject(0, 310, 300, 300, getRandomColor());
+let root3 = new WORect(0, 310, 300, 300, getRandomColor());
 
 //app.addElement(root);
 //app.addElement(container1);
 let verticalContainer = new WOVerticalContainer(10, 250, 80, 600);
 verticalContainer.setMargin(5, 30, 3, 3);
-verticalContainer.addElement(new WObject(5, 0, 50, 50, getRandomColor()));
-verticalContainer.addElement(new WObject(5, 0, 50, 50, getRandomColor()));
-verticalContainer.addElement(new WObject(5, 0, 50, 50, getRandomColor()));
-verticalContainer.addElement(new WObject(5, 0, 50, 50, getRandomColor()));
-verticalContainer.addElement(new WObject(5, 0, 50, 50, getRandomColor()));
-verticalContainer.addElement(new WObject(5, 0, 50, 50, getRandomColor()));
-verticalContainer.addElement(new WObject(5, 0, 50, 50, getRandomColor()));
+verticalContainer.addElement(new WORect(5, 0, 50, 50, getRandomColor()));
+verticalContainer.addElement(new WORect(5, 0, 50, 50, getRandomColor()));
+verticalContainer.addElement(new WORect(5, 0, 50, 50, getRandomColor()));
+verticalContainer.addElement(new WORect(5, 0, 50, 50, getRandomColor()));
+verticalContainer.addElement(new WORect(5, 0, 50, 50, getRandomColor()));
+verticalContainer.addElement(new WORect(5, 0, 50, 50, getRandomColor()));
+verticalContainer.addElement(new WORect(5, 0, 50, 50, getRandomColor()));
 app.addElement(bigContainer);
 app.addElement(verticalContainer);
+let circ = new WOCircle(100, 100, 60, getRandomColor());
+circ.setMotionMethod(moveInLine(0.2, 0.3));
+//app.addElement(circ);
+let collider = new WOCollidersContainer(100, 100, 300, 300, getRandomColor());
+//collider.addElement(circ);
+collider.addElement(lineMovingObj);
+collider.addElement(el);
+app.addElement(collider);
 app.run();

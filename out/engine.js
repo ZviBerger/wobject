@@ -26,7 +26,7 @@ export class WObject {
         return this.margin.left + this.size.width + this.margin.right;
     }
     getFullHeight() {
-        return this.margin.top + this.size.high + this.margin.bottom;
+        return this.margin.top + this.size.height + this.margin.bottom;
     }
     setMotionMethod(motionMethods) {
         this.motionMethods = motionMethods;
@@ -53,18 +53,11 @@ export class WObject {
         s.adoptPosition(this.position);
         this.elements.push(s);
     }
+    myDisplay(context) {
+        //override this method as your wish
+    }
     display(context) {
-        // a default displaying
-        //override the functionality by extending this class
-        context.clearRect(this.position.x, this.position.y, this.size.width, this.size.high);
-        context.beginPath();
-        context.lineWidth = "1";
-        context.fillStyle = this.color;
-        context.shadowColor = "#666565";
-        context.strokeStyle = this.color;
-        context.shadowBlur = 10;
-        context.fillRect(this.position.x, this.position.y, this.size.width, this.size.high);
-        context.stroke();
+        this.myDisplay(context);
         this.elements.forEach((element) => {
             element.display(context);
         });

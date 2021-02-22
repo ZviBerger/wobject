@@ -23,7 +23,7 @@ export class WObject {
     this.color = color;
     //  this.motionMethods  = (motion: WOMotion) => new WOMotion();
   }
-  update() {
+  update(): void {
     //this.color=getRandomColor();
     if (this.motionMethods) {
       let newMotion = this.motionMethods(this.motion);
@@ -38,7 +38,7 @@ export class WObject {
     return this.margin.left + this.size.width + this.margin.right;
   }
   getFullHeight() {
-    return this.margin.top + this.size.high + this.margin.bottom;
+    return this.margin.top + this.size.height + this.margin.bottom;
   }
   setMotionMethod(motionMethods: (motion: WOMotion) => WOMotion) {
     this.motionMethods = motionMethods;
@@ -48,7 +48,7 @@ export class WObject {
     this.motion = motion;
   }
 
-  adoptPosition(position) {
+  adoptPosition(position: WOPosition) {
     this.position.x += position.x;
     this.position.y += position.y;
   }
@@ -65,33 +65,17 @@ export class WObject {
     });
   }
 
-  addElement(s) {
+  addElement(s: WObject) {
     s.adoptPosition(this.position);
     this.elements.push(s);
   }
 
+  myDisplay(context) {
+    //override this method as your wish
+  }
+
   display(context) {
-    // a default displaying
-    //override the functionality by extending this class
-    context.clearRect(
-      this.position.x,
-      this.position.y,
-      this.size.width,
-      this.size.high
-    );
-    context.beginPath();
-    context.lineWidth = "1";
-    context.fillStyle = this.color;
-    context.shadowColor = "#666565";
-    context.strokeStyle = this.color;
-    context.shadowBlur = 10;
-    context.fillRect(
-      this.position.x,
-      this.position.y,
-      this.size.width,
-      this.size.high
-    );
-    context.stroke();
+    this.myDisplay(context);
     this.elements.forEach((element) => {
       element.display(context);
     });

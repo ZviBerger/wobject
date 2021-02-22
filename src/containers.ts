@@ -1,6 +1,5 @@
 import { WObject } from "./engine.js";
-import { WOApp } from "./wobject.js";
-import { WOFrame, WOPosition } from "./basics.js";
+import { WOPadding, WOPosition } from "./basics.js";
 
 interface Container {
   isFull(element: WObject): boolean;
@@ -20,6 +19,27 @@ export class WOContainer extends WObject implements Container {
   isFull(element: WObject) {
     return false;
   }
+  myDisplay(context) {
+    context.clearRect(
+      this.position.x,
+      this.position.y,
+      this.size.width,
+      this.size.height
+    );
+    context.beginPath();
+    context.lineWidth = "1";
+    context.fillStyle = this.color;
+    context.shadowColor = "#666565";
+    context.strokeStyle = this.color;
+    context.shadowBlur = 10;
+    context.fillRect(
+      this.position.x,
+      this.position.y,
+      this.size.width,
+      this.size.height
+    );
+    context.stroke();
+  }
 }
 
 export class WOHorizontalContainer extends WOContainer {
@@ -32,7 +52,6 @@ export class WOHorizontalContainer extends WOContainer {
     this.elements.forEach((element) => {
       countWidths += element.getFullWidth() + this.margin.left;
     });
-    console.log(position);
 
     if (countWidths > 0) countWidths -= this.margin.left;
     let leftSpace = (this.size.width - countWidths) / 2;
@@ -72,16 +91,16 @@ export class WOVerticalContainer extends WOContainer {
       countHeight += element.getFullHeight() + this.margin.top;
     });
     if (countHeight > 0) countHeight -= this.margin.top;
-    let topSpace = (this.size.high - countHeight) / 2;
+    let topSpace = (this.size.height - countHeight) / 2;
     topSpace += position.y;
     let lastEnd = position ? position.y : 0;
     this.elements.forEach((element, i) => {
       element.position.y = i == 0 ? topSpace : lastEnd + this.margin.top;
-      lastEnd = element.position.y + element.size.high;
+      lastEnd = element.position.y + element.size.height;
       element.reOrganize(element.position);
     });
   }
-  addElement(element) {
+  addElement(element: WObject) {
     element.position.x += this.margin.left + this.position.x;
     this.elements.push(element);
     this.reOrganize(this.position);
@@ -91,15 +110,22 @@ export class WOVerticalContainer extends WOContainer {
 export class WODynamicContainer extends WOContainer {
   rowsNum: number;
 
-  constructor(x, y, w, h, color, padding) {
+  constructor(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    color: string,
+    padding: WOPadding
+  ) {
     super(x, y, w, h, color);
     this.padding = padding;
     this.rowsNum = 0;
   }
-  reOrganize(position) {
+  reOrganize(position: WOPosition) {
     if (!position) return;
   }
-  addElement(element) {
+  addElement(element: WObject) {
     this.elements.push(element);
     this.reOrganize(this.position);
   }
@@ -108,7 +134,14 @@ export class WODynamicContainer extends WOContainer {
 export class WOGridContainer extends WOContainer {
   itemsPerRow: number;
 
-  constructor(x, y, w, h, color, itemsPerRow) {
+  constructor(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    color: string,
+    itemsPerRow: number
+  ) {
     super(x, y, w, h, color);
     this.itemsPerRow = itemsPerRow;
   }

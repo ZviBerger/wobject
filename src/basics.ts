@@ -8,7 +8,11 @@ export class WOStore {
 export class WOPosition {
   x: number;
   y: number;
-  constructor(x, y) {
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
+  set(x: number, y: number) {
     this.x = x;
     this.y = y;
   }
@@ -18,19 +22,6 @@ export class WOPosition {
   }
 }
 
-export class WORect {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-
-  constructor(x, y, w, h) {
-    this.x = x;
-    this.y = y;
-    this.width = w;
-    this.height = h;
-  }
-}
 export class WOMargin {
   left: number;
   top: number;
@@ -43,7 +34,7 @@ export class WOMargin {
     this.right = 0;
     this.bottom = 0;
   }
-  set(left, top, right, bottom) {
+  set(left: number, top: number, right: number, bottom: number) {
     this.left = left;
     this.top = top;
     this.right = right;
@@ -63,7 +54,7 @@ export class WOPadding {
     this.right = 0;
     this.bottom = 0;
   }
-  set(left, top, right, bottom) {
+  set(left: number, top: number, right: number, bottom: number) {
     this.left = left;
     this.top = top;
     this.right = right;
@@ -72,24 +63,30 @@ export class WOPadding {
 }
 export class WOSize {
   width: number;
-  high: number;
+  height: number;
 
-  constructor(width, high) {
+  constructor(width: number, high: number) {
     this.width = width;
-    this.high = high;
+    this.height = high;
   }
 }
 
 export class WOFrame {
-  topLeft: number;
-  topRight: number;
-  bottomLeft: number;
-  bottomRight: number;
-  constructor(topLeft, topRight, bottomLeft, bottomRight) {
-    this.topLeft = topLeft;
-    this.topRight = topRight;
-    this.bottomLeft = bottomLeft;
-    this.bottomRight = bottomRight;
+  topLeft: WOPosition;
+  topRight: WOPosition;
+  bottomLeft: WOPosition;
+  bottomRight: WOPosition;
+  constructor(x: number, y: number, w: number, h: number) {
+    this.topLeft = new WOPosition(x, y);
+    this.topRight = new WOPosition(x + w, y);
+    this.bottomLeft = new WOPosition(x, y + h);
+    this.bottomRight = new WOPosition(x + w, y + h);
+  }
+  update(pos: WOPosition, size: WOSize): void {
+    this.topLeft.set(pos.x, pos.y);
+    this.topRight.set(pos.x + size.width, pos.y);
+    this.bottomLeft.set(pos.x, pos.y + size.height);
+    this.bottomRight.set(pos.x + size.width, pos.y + size.height);
   }
 }
 
@@ -105,12 +102,24 @@ export class WOMotion {
     this.radius = 0;
     this.angel = 0;
   }
-  set(dX, dY, radius) {
+  set(dX: number, dY: number, radius: number) {
     this.dX = dX;
     this.dY = dY;
     this.radius = radius;
   }
-  setRadius(radius) {
+  setRadius(radius: number) {
     this.radius = radius;
+  }
+}
+
+export class WOPairString {
+  objName1: string;
+  objName2: string;
+  constructor(objName1: string, objName2: string) {
+    this.objName1 = objName1;
+    this.objName2 = objName2;
+  }
+  asString(): string {
+    return this.objName1 + this.objName2;
   }
 }

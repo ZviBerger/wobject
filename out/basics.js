@@ -8,17 +8,13 @@ export class WOPosition {
         this.x = x;
         this.y = y;
     }
+    set(x, y) {
+        this.x = x;
+        this.y = y;
+    }
     adapt(motion) {
         this.x += motion.dX;
         this.y += motion.dY;
-    }
-}
-export class WORect {
-    constructor(x, y, w, h) {
-        this.x = x;
-        this.y = y;
-        this.width = w;
-        this.height = h;
     }
 }
 export class WOMargin {
@@ -52,15 +48,21 @@ export class WOPadding {
 export class WOSize {
     constructor(width, high) {
         this.width = width;
-        this.high = high;
+        this.height = high;
     }
 }
 export class WOFrame {
-    constructor(topLeft, topRight, bottomLeft, bottomRight) {
-        this.topLeft = topLeft;
-        this.topRight = topRight;
-        this.bottomLeft = bottomLeft;
-        this.bottomRight = bottomRight;
+    constructor(x, y, w, h) {
+        this.topLeft = new WOPosition(x, y);
+        this.topRight = new WOPosition(x + w, y);
+        this.bottomLeft = new WOPosition(x, y + h);
+        this.bottomRight = new WOPosition(x + w, y + h);
+    }
+    update(pos, size) {
+        this.topLeft.set(pos.x, pos.y);
+        this.topRight.set(pos.x + size.width, pos.y);
+        this.bottomLeft.set(pos.x, pos.y + size.height);
+        this.bottomRight.set(pos.x + size.width, pos.y + size.height);
     }
 }
 export class WOMotion {
@@ -77,6 +79,15 @@ export class WOMotion {
     }
     setRadius(radius) {
         this.radius = radius;
+    }
+}
+export class WOPairString {
+    constructor(objName1, objName2) {
+        this.objName1 = objName1;
+        this.objName2 = objName2;
+    }
+    asString() {
+        return this.objName1 + this.objName2;
     }
 }
 //# sourceMappingURL=basics.js.map

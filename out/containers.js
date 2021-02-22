@@ -9,6 +9,17 @@ export class WOContainer extends WObject {
     isFull(element) {
         return false;
     }
+    myDisplay(context) {
+        context.clearRect(this.position.x, this.position.y, this.size.width, this.size.height);
+        context.beginPath();
+        context.lineWidth = "1";
+        context.fillStyle = this.color;
+        context.shadowColor = "#666565";
+        context.strokeStyle = this.color;
+        context.shadowBlur = 10;
+        context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
+        context.stroke();
+    }
 }
 export class WOHorizontalContainer extends WOContainer {
     constructor(x, y, w, h, color) {
@@ -22,7 +33,6 @@ export class WOHorizontalContainer extends WOContainer {
         this.elements.forEach((element) => {
             countWidths += element.getFullWidth() + this.margin.left;
         });
-        console.log(position);
         if (countWidths > 0)
             countWidths -= this.margin.left;
         let leftSpace = (this.size.width - countWidths) / 2;
@@ -62,12 +72,12 @@ export class WOVerticalContainer extends WOContainer {
         });
         if (countHeight > 0)
             countHeight -= this.margin.top;
-        let topSpace = (this.size.high - countHeight) / 2;
+        let topSpace = (this.size.height - countHeight) / 2;
         topSpace += position.y;
         let lastEnd = position ? position.y : 0;
         this.elements.forEach((element, i) => {
             element.position.y = i == 0 ? topSpace : lastEnd + this.margin.top;
-            lastEnd = element.position.y + element.size.high;
+            lastEnd = element.position.y + element.size.height;
             element.reOrganize(element.position);
         });
     }

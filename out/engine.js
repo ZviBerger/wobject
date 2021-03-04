@@ -9,10 +9,8 @@ export class WObject {
         this.padding = new WOPadding();
         this.motion = new WOMotion();
         this.color = color;
-        //  this.motionMethods  = (motion: WOMotion) => new WOMotion();
     }
     update() {
-        //this.color=getRandomColor();
         if (this.motionMethods) {
             let newMotion = this.motionMethods(this.motion);
             this.position.adapt(newMotion);

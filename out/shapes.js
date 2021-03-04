@@ -1,6 +1,12 @@
 import { WObject } from "./engine.js";
 import { WOFrame } from "./basics.js";
-export class WORect extends WObject {
+import { WOTextBox } from "./text.js";
+class WOShape extends WObject {
+    setText(text) {
+        this.text = new WOTextBox(this.position.x + 10, this.position.y + 10, this.size.width, this.size.width, "#000", text);
+    }
+}
+export class WORect extends WOShape {
     constructor(x, y, w, h, color) {
         super(x, y, w, h, color);
         this.frame = new WOFrame(x, y, w, h);
@@ -12,20 +18,40 @@ export class WORect extends WObject {
     myDisplay(context) {
         context.clearRect(this.position.x, this.position.y, this.size.width, this.size.height);
         context.beginPath();
-        context.lineWidth = "1";
+        context.lineWidth = 1;
         context.fillStyle = this.color;
         context.shadowColor = "#666565";
         context.strokeStyle = this.color;
         context.shadowBlur = 10;
         context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
         context.stroke();
-        new WOCircle(this.frame.topLeft.x, this.frame.topLeft.y, 5, "#000").display(context);
-        new WOCircle(this.frame.topRight.x, this.frame.topRight.y, 5, "#000").display(context);
-        new WOCircle(this.frame.bottomRight.x, this.frame.bottomRight.y, 5, "#000").display(context);
-        new WOCircle(this.frame.bottomLeft.x, this.frame.bottomLeft.y, 5, "#000").display(context);
+        this.text && this.text.display(context);
+        /*
+        new WOCircle(this.frame.topLeft.x, this.frame.topLeft.y, 5, "#000").display(
+          context
+        );
+        new WOCircle(
+          this.frame.topRight.x,
+          this.frame.topRight.y,
+          5,
+          "#000"
+        ).display(context);
+        new WOCircle(
+          this.frame.bottomRight.x,
+          this.frame.bottomRight.y,
+          5,
+          "#000"
+        ).display(context);
+        new WOCircle(
+          this.frame.bottomLeft.x,
+          this.frame.bottomLeft.y,
+          5,
+          "#000"
+        ).display(context);
+        */
     }
 }
-export class WOCircle extends WObject {
+export class WOCircle extends WOShape {
     constructor(x, y, r, color) {
         super(x, y, r * 2, r * 2, color);
         this.radius = r;

@@ -88,6 +88,13 @@ export class WOFrame {
     this.bottomLeft.set(pos.x, pos.y + size.height);
     this.bottomRight.set(pos.x + size.width, pos.y + size.height);
   }
+  contain(x: number, y: number): boolean {
+    let topLeft = this.topLeft,
+      bottomRight = this.bottomRight;
+    return (
+      x > topLeft.x && x < bottomRight.x && y > topLeft.y && y < bottomRight.y
+    );
+  }
 }
 
 export class WOMotion {

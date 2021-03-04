@@ -55,7 +55,6 @@ const collideRectWithCircle: CollideMethod = (
 };
 
 const collideCircleWithRect = (circle: WOCircle, rect: WORect): boolean => {
-  console.log("collideCircleWithRect");
   return collideRectWithCircle(rect, circle);
 };
 
@@ -66,10 +65,6 @@ collide.set("WOCircle" + "WORect", collideCircleWithRect);
 collide.set("WORect" + "WORect", collideRectWithRect);
 
 export const isCollide = (obj1: WObject, obj2: WObject): boolean => {
-  let cm = collide.get(obj1.constructor.name + obj2.constructor.name);
-  if (cm) {
-    console.log(cm(obj1, obj2));
-    return cm(obj1, obj2);
-  }
-  return false;
+  const cm = collide.get(obj1.constructor.name + obj2.constructor.name);
+  return cm && cm(obj1, obj2);
 };

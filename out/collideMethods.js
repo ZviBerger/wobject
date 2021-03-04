@@ -33,7 +33,6 @@ const collideRectWithCircle = (rect, circle) => {
     return cornerDistance_sq <= circle.radius * circle.radius;
 };
 const collideCircleWithRect = (circle, rect) => {
-    console.log("collideCircleWithRect");
     return collideRectWithCircle(rect, circle);
 };
 const collide = new Map();
@@ -42,11 +41,7 @@ collide.set("WORect" + "WOCircle", collideRectWithCircle);
 collide.set("WOCircle" + "WORect", collideCircleWithRect);
 collide.set("WORect" + "WORect", collideRectWithRect);
 export const isCollide = (obj1, obj2) => {
-    let cm = collide.get(obj1.constructor.name + obj2.constructor.name);
-    if (cm) {
-        console.log(cm(obj1, obj2));
-        return cm(obj1, obj2);
-    }
-    return false;
+    const cm = collide.get(obj1.constructor.name + obj2.constructor.name);
+    return cm && cm(obj1, obj2);
 };
 //# sourceMappingURL=collideMethods.js.map

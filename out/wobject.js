@@ -6,7 +6,7 @@ export class WOApp {
         this.updateRate = updateRate;
     }
     update() {
-        this.elements.forEach(element => {
+        this.elements.forEach((element) => {
             element.update();
         });
     }
@@ -21,7 +21,7 @@ export class WOApp {
     }
     display() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.elements.forEach(element => {
+        this.elements.forEach((element) => {
             element.display(this.context);
         });
     }

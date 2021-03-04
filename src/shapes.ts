@@ -1,8 +1,22 @@
 import { WObject } from "./engine.js";
 import { WOFrame } from "./basics.js";
-interface WOColliding {}
+import { WOTextBox } from "./text.js";
 
-export class WORect extends WObject {
+class WOShape extends WObject {
+  text: WOTextBox;
+  public setText(text: string): void {
+    this.text = new WOTextBox(
+      this.position.x + 10,
+      this.position.y + 10,
+      this.size.width,
+      this.size.width,
+      "#000",
+      text
+    );
+  }
+}
+
+export class WORect extends WOShape {
   frame: WOFrame;
   constructor(x: number, y: number, w: number, h: number, color: string) {
     super(x, y, w, h, color);
@@ -13,7 +27,7 @@ export class WORect extends WObject {
     this.frame.update(this.position, this.size);
   }
 
-  myDisplay(context) {
+  myDisplay(context: CanvasRenderingContext2D) {
     context.clearRect(
       this.position.x,
       this.position.y,
@@ -21,7 +35,7 @@ export class WORect extends WObject {
       this.size.height
     );
     context.beginPath();
-    context.lineWidth = "1";
+    context.lineWidth = 1;
     context.fillStyle = this.color;
     context.shadowColor = "#666565";
     context.strokeStyle = this.color;
@@ -33,6 +47,8 @@ export class WORect extends WObject {
       this.size.height
     );
     context.stroke();
+    this.text && this.text.display(context);
+    /*
     new WOCircle(this.frame.topLeft.x, this.frame.topLeft.y, 5, "#000").display(
       context
     );
@@ -54,17 +70,18 @@ export class WORect extends WObject {
       5,
       "#000"
     ).display(context);
+    */
   }
 }
 
-export class WOCircle extends WObject {
+export class WOCircle extends WOShape {
   radius: number;
   constructor(x: number, y: number, r: number, color: string) {
     super(x, y, r * 2, r * 2, color);
     this.radius = r;
   }
 
-  myDisplay(context) {
+  myDisplay(context: CanvasRenderingContext2D) {
     context.beginPath();
     context.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
     context.fillStyle = this.color;

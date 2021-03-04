@@ -19,7 +19,7 @@ export class WOContainer extends WObject implements Container {
   isFull(element: WObject) {
     return false;
   }
-  myDisplay(context) {
+  myDisplay(context: CanvasRenderingContext2D) {
     context.clearRect(
       this.position.x,
       this.position.y,
@@ -27,7 +27,7 @@ export class WOContainer extends WObject implements Container {
       this.size.height
     );
     context.beginPath();
-    context.lineWidth = "1";
+    context.lineWidth = 1;
     context.fillStyle = this.color;
     context.shadowColor = "#666565";
     context.strokeStyle = this.color;

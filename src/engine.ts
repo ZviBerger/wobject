@@ -10,9 +10,10 @@ export class WObject {
   padding: WOPadding;
   motion: WOMotion;
   color: string;
+
   motionMethods: (motion: WOMotion) => WOMotion;
 
-  constructor(x, y, w, h, color) {
+  constructor(x: number, y: number, w: number, h: number, color: string) {
     this.elements = [];
     this.position = new WOPosition(x, y);
     this.originPos = new WOPosition(x, y);
@@ -21,10 +22,8 @@ export class WObject {
     this.padding = new WOPadding();
     this.motion = new WOMotion();
     this.color = color;
-    //  this.motionMethods  = (motion: WOMotion) => new WOMotion();
   }
   update(): void {
-    //this.color=getRandomColor();
     if (this.motionMethods) {
       let newMotion = this.motionMethods(this.motion);
       this.position.adapt(newMotion);
@@ -70,11 +69,11 @@ export class WObject {
     this.elements.push(s);
   }
 
-  myDisplay(context) {
+  myDisplay(context: CanvasRenderingContext2D) {
     //override this method as your wish
   }
 
-  display(context) {
+  display(context: CanvasRenderingContext2D) {
     this.myDisplay(context);
     this.elements.forEach((element) => {
       element.display(context);

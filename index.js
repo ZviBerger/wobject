@@ -7,30 +7,11 @@ import {
   WOHorizontalContainer,
   WOVerticalContainer,
 } from "./out/containers.js";
+import { WOButton } from "./out/buttons.js";
 import { WOCollidersContainer } from "./out/colliders.js";
-class TextBox extends WObject {
-  constructor(x, y, w, h, color, text) {
-    super(x, y, w, h, color);
-    this.text = text;
-  }
-  setText(text) {
-    this.text = text;
-  }
-  display(context) {
-    context.fillText(this.text, this.position.x, this.position.y);
-  }
-}
 
 let width = 2000;
-let app = new WOApp("myCanvas", 100);
-/*
-let root  = new WObject(10,10,300,300,getRandomColor());
-root.addElement(new WObject(30,15,30,30,"green"));
-root.addElement(new WObject(60,15,30,30,"yellow"));
-root.addElement(new WObject(90,15,30,30,"black"));
-root.addElement(new WObject(120,15,30,30,"red"));
-root.addElement(new TextBox(0,10,100,100,"white","This is The Box!"));
-*/
+let app = new WOApp("myCanvas", 30);
 
 let bigContainer = new WOHorizontalContainer(10, 10, 1500, 130, "White");
 bigContainer.setMargin(50, 15, 0, 0);
@@ -93,10 +74,30 @@ app.addElement(bigContainer);
 app.addElement(verticalContainer);
 let circ = new WOCircle(100, 100, 60, getRandomColor());
 circ.setMotionMethod(moveInLine(0.2, 0.3));
-//app.addElement(circ);
-let collider = new WOCollidersContainer(100, 100, 300, 300, getRandomColor());
-//collider.addElement(circ);
+let collider = new WOCollidersContainer(
+  100,
+  100,
+  300,
+  300,
+  getRandomColor(),
+  () => {}
+);
+collider.addElement(circ);
 collider.addElement(lineMovingObj);
 collider.addElement(el);
+
+collider.addElement(new WOButton(400, 400, 20, 20, getRandomColor()));
+
+const ButtonsObj = WOButton.init(app.canvas);
+WOButton.add(400, 400, 70, 40, getRandomColor(), () => {
+  console.log("A clicked");
+});
+let rad = circ.radius;
+WOButton.add(450, 450, 30, 30, getRandomColor(), () => {
+  circ.color = getRandomColor();
+  // circ.radius = rad;
+  rad += 3;
+});
 app.addElement(collider);
+app.addElement(ButtonsObj);
 app.run();

@@ -9,10 +9,11 @@ export class WObject {
         this.padding = new WOPadding();
         this.motion = new WOMotion();
         this.color = color;
+        this.wobjName = this.constructor.name;
     }
     update() {
         if (this.motionMethods) {
-            let newMotion = this.motionMethods(this.motion);
+            const newMotion = this.motionMethods(this.motion);
             this.position.adapt(newMotion);
             this.motion = newMotion;
         }
@@ -36,6 +37,10 @@ export class WObject {
         this.position.x += position.x;
         this.position.y += position.y;
     }
+    setPosition(position) {
+        this.position.x = position.x;
+        this.position.y = position.y;
+    }
     setMargin(left, top, right, bottom) {
         this.margin.set(left, top, right, bottom);
     }
@@ -49,6 +54,9 @@ export class WObject {
     }
     addElement(s) {
         s.adoptPosition(this.position);
+        this.elements.push(s);
+    }
+    addElementNotAdopt(s) {
         this.elements.push(s);
     }
     myDisplay(context) {

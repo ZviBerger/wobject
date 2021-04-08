@@ -80,7 +80,8 @@ let collider = new WOCollidersContainer(
   300,
   300,
   getRandomColor(),
-  () => {}
+  "200",
+  () => new Map()
 );
 collider.addElement(circ);
 collider.addElement(lineMovingObj);
@@ -89,13 +90,15 @@ collider.addElement(el);
 collider.addElement(new WOButton(400, 400, 20, 20, getRandomColor()));
 
 const ButtonsObj = WOButton.init(app.canvas);
-WOButton.add(400, 400, 70, 40, getRandomColor(), () => {
+WOButton.add(600, 400, 150, 40, getRandomColor(), "Snake Game!", () => {
   console.log("A clicked");
+  window.location.href = "/apps/snakeGame/";
 });
 let rad = circ.radius;
-WOButton.add(450, 450, 30, 30, getRandomColor(), () => {
+WOButton.add(450, 450, 150, 40, getRandomColor(), "Change color", () => {
   circ.color = getRandomColor();
   // circ.radius = rad;
+
   rad += 3;
 });
 app.addElement(collider);

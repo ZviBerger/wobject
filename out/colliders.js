@@ -1,5 +1,4 @@
 import { WObject } from "./engine.js";
-import { WOPairString } from "./basics.js";
 import { isCollide } from "./collideMethods.js";
 const voidAction = () => { };
 export class CollisionManager {
@@ -11,23 +10,29 @@ export class CollisionManager {
         return (_a = this.collideMap.get(classes)) !== null && _a !== void 0 ? _a : voidAction;
     }
     runActivity(wo1, wo2) {
-        this.lookup(new WOPairString(wo1.constructor.name, wo2.constructor.name))(wo1, wo2);
+        this.lookup(wo1.wobjName + wo2.wobjName)(wo1, wo2);
     }
 }
 export class WOCollidersContainer extends WObject {
-    constructor(x, y, w, h, color, initCollideMap) {
+    constructor(x, y, w, h, color, rateCheck, initCollideMap) {
         super(x, y, w, h, color);
-        this.collusionManager = new CollisionManager(initCollideMap);
+        this.collisionManager = new CollisionManager(initCollideMap);
         setInterval(() => {
             this.checkCollide();
-        }, 200);
+        }, rateCheck);
     }
+    /**
+     * @method checkCollide run each time (rateCheck)
+     * and for each two different object if they collide
+     * (according to the methods defined in the collideMap of collideMethods)
+     * run specific activity that pre defined in initCollideMap
+     */
     checkCollide() {
         this.elements.forEach((wo1) => {
             this.elements.forEach((wo2) => {
                 if (wo1 !== wo2 && isCollide(wo1, wo2)) {
                     console.log("Colliding!");
-                    // this.collusionManager.runActivity(wo1, wo2);
+                    this.collisionManager.runActivity(wo1, wo2);
                 }
             });
         });

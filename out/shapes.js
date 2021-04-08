@@ -1,11 +1,27 @@
 import { WObject } from "./engine.js";
 import { WOFrame } from "./basics.js";
 import { WOTextBox } from "./text.js";
+//===============================================================
+/**
+ *@class WOShape is a general shape form extends WObject
+ */
 class WOShape extends WObject {
     setText(text) {
-        this.text = new WOTextBox(this.position.x + 10, this.position.y + 10, this.size.width, this.size.width, "#000", text);
+        this.text = new WOTextBox(this.position.x, this.position.y, this.size.width, this.size.height, "#000", text);
+    }
+    setTextPosition(position) {
+        this.text && this.text.setPosition(position);
     }
 }
+//===============================================================
+/**
+ *@class WORect is a rectangle shape extends WOShape
+ * @param x position x
+ * @param y position y
+ * @param w the width size
+ * @param h the height size
+ * @param color in format  '#RRBBGG'
+ */
 export class WORect extends WOShape {
     constructor(x, y, w, h, color) {
         super(x, y, w, h, color);
@@ -23,6 +39,7 @@ export class WORect extends WOShape {
         context.shadowColor = "#666565";
         context.strokeStyle = this.color;
         context.shadowBlur = 10;
+        //context.filter = "contrast(80%)";
         context.fillRect(this.position.x, this.position.y, this.size.width, this.size.height);
         context.stroke();
         this.text && this.text.display(context);
@@ -51,6 +68,15 @@ export class WORect extends WOShape {
         */
     }
 }
+//===============================================================
+/**
+ *@class WOCircle is a rectangle shape extends WOShape
+ * @param x position x
+ * @param y position y
+ * @param w the width size
+ * @param h the height size
+ * @param color in format  '#RRBBGG'
+ */
 export class WOCircle extends WOShape {
     constructor(x, y, r, color) {
         super(x, y, r * 2, r * 2, color);

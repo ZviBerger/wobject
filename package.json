@@ -2,7 +2,7 @@
   "name": "wobject",
   "version": "1.0.0",
   "description": "An OOP framework for building web interfaces",
-  "main": ".mongorc.js",
+  "main": ".index.js",
   "dependencies": {},
   "devDependencies": {},
   "scripts": {

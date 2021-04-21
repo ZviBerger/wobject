@@ -1,6 +1,6 @@
 # WObject - Web Object
 
-WObject is a Typescript library for developing UI application based on HTML Canvas.
+WObject is a Typescript library for developing UI applications based on HTML Canvas.
 
 Take a look on this games that build with on WObject:
 

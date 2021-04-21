@@ -10,13 +10,14 @@ class WOShape extends WObject {
   text: WOTextBox;
   public setText(text: string): void {
     this.text = new WOTextBox(
-      this.position.x,
-      this.position.y,
+      10,
+      30,
       this.size.width,
       this.size.height,
       "#000",
       text
     );
+    this.addElement(this.text);
   }
   setTextPosition(position: WOPosition) {
     this.text && this.text.setPosition(position);
@@ -66,7 +67,6 @@ export class WORect extends WOShape {
     );
 
     context.stroke();
-    this.text && this.text.display(context);
     /*
     new WOCircle(this.frame.topLeft.x, this.frame.topLeft.y, 5, "#000").display(
       context

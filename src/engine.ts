@@ -1,7 +1,14 @@
 import { WOMargin, WOPosition, WOSize, WOPadding, WOMotion } from "./basics.js";
-import { getRandomColor } from "./utility.js";
 
-export class WObject {
+export interface WebObject {
+  elements: Array<WebObject>;
+  update(): void;
+  addElement(s: WebObject): void;
+  display(context: CanvasRenderingContext2D): void;
+  reOrganize(position?: WOPosition): void;
+}
+
+export class WObject implements WebObject {
   elements: Array<WObject>;
   position: WOPosition;
   originPos: WOPosition;
@@ -14,7 +21,7 @@ export class WObject {
 
   motionMethods: (motion: WOMotion) => WOMotion;
 
-  constructor(x: number, y: number, w: number, h: number, color: string) {
+  constructor(x: number, y: number, w: number, h: number, color?: string) {
     this.elements = [];
     this.position = new WOPosition(x, y);
     this.originPos = new WOPosition(x, y);
@@ -58,13 +65,13 @@ export class WObject {
     this.position.y = position.y;
   }
 
-  setMargin(left, top, right, bottom) {
+  setMargin(left: number, top: number, right: number, bottom: number) {
     this.margin.set(left, top, right, bottom);
   }
-  setPadding(left, top, right, bottom) {
+  setPadding(left: number, top: number, right: number, bottom: number) {
     this.padding.set(left, top, right, bottom);
   }
-  reOrganize(position) {
+  reOrganize(position?: WOPosition) {
     this.elements.forEach((element) => {
       element.reOrganize(position ?? this.position);
     });
@@ -86,6 +93,40 @@ export class WObject {
   display(context: CanvasRenderingContext2D) {
     this.myDisplay(context);
     this.elements.forEach((element) => {
+      element.display(context);
+    });
+  }
+}
+
+/**
+ * @class LightWObject
+ *
+ */
+export class LightWObject implements WebObject {
+  elements: Array<WebObject>;
+  wobjName: string;
+
+  constructor() {
+    this.elements = [];
+    this.wobjName = this.constructor.name;
+  }
+  update(): void {
+    this.elements.forEach((element: WebObject) => {
+      element.update();
+    });
+  }
+  reOrganize(): void {}
+
+  addElement(s: WebObject) {
+    this.elements.push(s);
+  }
+
+  myDisplay(context: CanvasRenderingContext2D) {
+    //override this method as your wish
+  }
+  display(context: CanvasRenderingContext2D) {
+    this.myDisplay(context);
+    this.elements.forEach((element: WebObject) => {
       element.display(context);
     });
   }

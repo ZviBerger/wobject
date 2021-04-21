@@ -19,12 +19,12 @@ import { Snake } from "./src/snake.js";
 import "./src/CollisionDefinition.js";
 
 //========================================================
-const app = new WOApp("myCanvas", 100);
+const app = new WOApp("myCanvas", 40);
 
-const direction2Move = new Direction2Move(50, 50);
+const direction2Move = new Direction2Move(30, 30);
 const bigContainer = new WOContainer(0, 0, 2000, 1100, getRandomColor());
 const food = new WORect(600, 600, 50, 50, getRandomColor());
-food.setMotionMethod(moveInCircle(10.05, 10.054));
+food.setMotionMethod(moveInCircle(4.25, 0.054));
 
 const snake = new Snake(300, 300, 50, 50, "#000000", direction2Move);
 let score = 0;
@@ -56,7 +56,7 @@ const collider = new WOCollidersContainer(
   300,
   300,
   getRandomColor(),
-  90, //rate check (each n ms collision will be check automatically)
+  39, //rate check (each n ms collision will be check automatically)
   () => actionMap
 );
 

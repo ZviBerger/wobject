@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { WObject } from "./engine.js";
 import { WORect } from "./shapes.js";
 import { adjustColor } from "./utility.js";
@@ -34,11 +43,21 @@ export class WOButton extends WObject {
         if (!WOButton.instance) {
             WOButton.instance = new WOButton();
             WOButton.instance.actionMap = new Map();
+            canvas.addEventListener("touchstart", (event) => __awaiter(this, void 0, void 0, function* () {
+                WOButton.instance.checkWhenTouched(event);
+            }), { passive: true });
+            canvas.addEventListener("touchend", (event) => __awaiter(this, void 0, void 0, function* () {
+                setTimeout(() => {
+                    WOButton.instance.checkAfterEvent(event);
+                }, 100);
+            }));
             canvas.addEventListener("mousedown", (event) => {
                 WOButton.instance.checkWhenClicked(event);
             });
             canvas.addEventListener("mouseup", (event) => {
-                WOButton.instance.checkAfterClicked(event);
+                setTimeout(() => {
+                    WOButton.instance.checkAfterEvent(event);
+                }, 100);
             });
         }
         WOButton.instance.canvas = canvas;
@@ -65,7 +84,15 @@ export class WOButton extends WObject {
             }
         });
     }
-    checkAfterClicked(event) {
+    checkWhenTouched(event) {
+        WOButton.instance.elements.forEach((button) => {
+            if ((button.pressedNow = button.contain(event.touches[0].clientX, event.touches[0].clientY))) {
+                const action = WOButton.instance.actionMap.get(button.id);
+                action && action();
+            }
+        });
+    }
+    checkAfterEvent(event) {
         WOButton.instance.elements.forEach((button) => {
             button.pressedNow = false;
         });

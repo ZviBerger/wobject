@@ -14,3 +14,9 @@ export const moveInLine = (x: number, y: number) => (mo: WOMotion) => {
   mo.dY = y;
   return mo;
 };
+
+export const accelerateInLine = (x: number, y: number) => (mo: WOMotion) => {
+  mo.dX += x;
+  mo.dY += y;
+  return mo;
+};

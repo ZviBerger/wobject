@@ -1,3 +1,4 @@
+export * from "./animation.js";
 export * from "./basics.js";
 export * from "./buttons.js";
 export * from "./collideMethods.js";
@@ -9,3 +10,4 @@ export * from "./shapes.js";
 export * from "./text.js";
 export * from "./utility.js";
 export * from "./wobject.js";
+export * from "./image.js";

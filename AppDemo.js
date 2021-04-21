@@ -1,4 +1,4 @@
-import { getRandomColor } from "./out/utility.js";
+import { getRandomColor, getRandomNumber } from "./out/utility.js";
 import { WObject } from "./out/engine.js";
 import { WOApp } from "./out/wobject.js";
 import { WORect, WOCircle } from "./out/shapes.js";
@@ -9,9 +9,9 @@ import {
 } from "./out/containers.js";
 import { WOButton } from "./out/buttons.js";
 import { WOCollidersContainer } from "./out/colliders.js";
-
+import { WOImage } from "./out/image.js";
 let width = 2000;
-let app = new WOApp("myCanvas", 30);
+let app = new WOApp("myCanvas", 50);
 
 let bigContainer = new WOHorizontalContainer(10, 10, 1500, 130, "White");
 bigContainer.setMargin(50, 15, 0, 0);
@@ -90,17 +90,31 @@ collider.addElement(el);
 collider.addElement(new WOButton(400, 400, 20, 20, getRandomColor()));
 
 const ButtonsObj = WOButton.init(app.canvas);
-WOButton.add(600, 400, 150, 40, getRandomColor(), "Snake Game!", () => {
+WOButton.add(600, 400, 220, 40, getRandomColor(), "Snake Game!", () => {
   console.log("A clicked");
   window.location.href = "/apps/snakeGame/";
 });
 let rad = circ.radius;
-WOButton.add(450, 450, 150, 40, getRandomColor(), "Change color", () => {
+WOButton.add(450, 450, 230, 40, getRandomColor(), "Change color", () => {
   circ.color = getRandomColor();
-  // circ.radius = rad;
-
   rad += 3;
 });
+for (let i = 0; i < 10; i++) {
+  const img = new WOImage(
+    200 + i * i * 10,
+    200 + i * 10 + (i % 2) * 60,
+    "http://clipart-library.com/image_gallery/401221.png",
+    150,
+    150
+    //  "https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"
+  );
+  img.setMotionMethod(moveInCircle(2, 0.2));
+  const img1 = new Image();
+  img1.src = "http://clipart-library.com/image_gallery/401221.png";
+  console.log(img1.width);
+  app.addElement(img);
+}
+//img.setSlice(20, 30, 100, 100);
 app.addElement(collider);
 app.addElement(ButtonsObj);
 app.run();

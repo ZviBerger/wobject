@@ -1,5 +1,8 @@
 import { WObject } from "./engine.js";
 import { isCollide } from "./collideMethods.js";
+import { WOFrame } from "./basics.js";
+import { collideFrames } from "./collideMethods.js";
+import { WORect } from "./shapes.js";
 
 type Action = (obj1: WObject, obj2: WObject) => void;
 
@@ -26,6 +29,9 @@ export class CollisionManager {
 
 export class WOCollidersContainer extends WObject implements Collider {
   collisionManager: CollisionManager;
+  rateCheck: number;
+  intervalID: number;
+  frame: WOFrame;
 
   constructor(
     x: number,
@@ -34,13 +40,33 @@ export class WOCollidersContainer extends WObject implements Collider {
     h: number,
     color: string,
     rateCheck: number,
-    initCollideMap: ActionMapBuilder
+    initCollideMap?: ActionMapBuilder
   ) {
     super(x, y, w, h, color);
+    this.rateCheck = rateCheck;
+    this.intervalID = 0;
+    this.frame = new WOFrame(x, y, w, h);
+    if (initCollideMap) this.setCollisionManager(initCollideMap);
+  }
+
+  setCollisionManager(initCollideMap: ActionMapBuilder) {
     this.collisionManager = new CollisionManager(initCollideMap);
-    setInterval(() => {
+    return;
+    if (this.intervalID !== 0) clearInterval(this.intervalID);
+
+    this.intervalID = setInterval(() => {
       this.checkCollide();
-    }, rateCheck);
+    }, this.rateCheck);
+  }
+
+  rectObjInsideFrame(): Array<WObject> {
+    return this.elements.filter((wbj: WORect) =>
+      collideFrames(this.frame, wbj.frame)
+    );
+  }
+  update() {
+    this.checkCollide();
+    super.update();
   }
   /**
    * @method checkCollide run each time (rateCheck)

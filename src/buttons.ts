@@ -61,13 +61,32 @@ export class WOButton extends WObject {
     if (!WOButton.instance) {
       WOButton.instance = new WOButton();
       WOButton.instance.actionMap = new Map<number, ClickAction>();
+
+      canvas.addEventListener(
+        "touchstart",
+        async (event: TouchEvent) => {
+          WOButton.instance.checkWhenTouched(event);
+        },
+        { passive: true }
+      );
+
+      canvas.addEventListener("touchend", async (event: TouchEvent) => {
+        setTimeout(() => {
+          WOButton.instance.checkAfterEvent(event);
+        }, 100);
+      });
+
       canvas.addEventListener("mousedown", (event: MouseEvent) => {
         WOButton.instance.checkWhenClicked(event);
       });
+
       canvas.addEventListener("mouseup", (event: MouseEvent) => {
-        WOButton.instance.checkAfterClicked(event);
+        setTimeout(() => {
+          WOButton.instance.checkAfterEvent(event);
+        }, 100);
       });
     }
+
     WOButton.instance.canvas = canvas;
     return WOButton.instance;
   }
@@ -105,7 +124,21 @@ export class WOButton extends WObject {
       }
     });
   }
-  private checkAfterClicked(event: MouseEvent): void {
+  private checkWhenTouched(event: TouchEvent): void {
+    WOButton.instance.elements.forEach((button: WOInternalButton) => {
+      if (
+        (button.pressedNow = button.contain(
+          event.touches[0].clientX,
+          event.touches[0].clientY
+        ))
+      ) {
+        const action = WOButton.instance.actionMap.get(button.id);
+        action && action();
+      }
+    });
+  }
+
+  private checkAfterEvent(event: Event): void {
     WOButton.instance.elements.forEach((button: WOInternalButton) => {
       button.pressedNow = false;
     });

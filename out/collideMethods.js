@@ -27,6 +27,18 @@ export const collideRectWithRect = (rec1, rec2) => {
         R1.bottomRight.y > R2.topLeft.y);
 };
 /***************************************************************
+ * @function collideFrames
+ * @param frame1
+ * @param frame2
+ * @returns true if they are colliding
+ */
+export const collideFrames = (f1, f2) => {
+    return (f1.topLeft.x < f2.bottomRight.x &&
+        f1.bottomRight.x > f2.topLeft.x &&
+        f1.topLeft.y < f2.bottomRight.y &&
+        f1.bottomRight.y > f2.topLeft.y);
+};
+/***************************************************************
  * @function collideRectWithCircle
  * @param rect
  * @param circle

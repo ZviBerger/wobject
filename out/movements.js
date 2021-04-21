@@ -9,4 +9,9 @@ export const moveInLine = (x, y) => (mo) => {
     mo.dY = y;
     return mo;
 };
+export const accelerateInLine = (x, y) => (mo) => {
+    mo.dX += x;
+    mo.dY += y;
+    return mo;
+};
 //# sourceMappingURL=movements.js.map

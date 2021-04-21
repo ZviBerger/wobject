@@ -1,4 +1,5 @@
 import { WOPosition } from "./basics.js";
+import { LightWObject } from "./engine.js";
 //======================================================================
 //getRandomColor - return a RBG random color (format like '#FFFFFF')
 //======================================================================
@@ -30,4 +31,20 @@ export const getRandomNumber = (min, max) => {
 //getRandomPosition - return a position in the range xMin-xMax, yMin-yMax
 //======================================================================
 export const getRandomPosition = (xMin, xMax, yMin, yMax) => new WOPosition(getRandomNumber(xMin, xMax), getRandomNumber(yMin, yMax));
+export class WOClock extends LightWObject {
+    constructor(iterationsToCount) {
+        super();
+        this.iterationsToCount = iterationsToCount;
+        this.count = 0;
+    }
+    update() {
+        this.count += 1;
+    }
+    isTime() {
+        return this.count >= this.iterationsToCount;
+    }
+    restart() {
+        this.count = 0;
+    }
+}
 //# sourceMappingURL=utility.js.map

@@ -1,5 +1,6 @@
 import { WOCircle, WORect } from "./shapes.js";
 import { WObject } from "./engine.js";
+import { WOFrame } from "./basics.js";
 /**
  * @module collideMethods - this module is for settings the object
  * with the right collision methods.
@@ -48,6 +49,20 @@ export const collideRectWithRect: CollideMethod = (
   );
 };
 
+/***************************************************************
+ * @function collideFrames
+ * @param frame1
+ * @param frame2
+ * @returns true if they are colliding
+ */
+export const collideFrames = (f1: WOFrame, f2: WOFrame): boolean => {
+  return (
+    f1.topLeft.x < f2.bottomRight.x &&
+    f1.bottomRight.x > f2.topLeft.x &&
+    f1.topLeft.y < f2.bottomRight.y &&
+    f1.bottomRight.y > f2.topLeft.y
+  );
+};
 /***************************************************************
  * @function collideRectWithCircle
  * @param rect

@@ -63,7 +63,7 @@ export class WOHorizontalContainer extends WOContainer {
       element.reOrganize(element.position);
     });
   }
-  addElement(element) {
+  addElement(element: WObject) {
     element.position.y += this.margin.top + this.position.y;
     this.elements.push(element);
     this.reOrganize(this.position);

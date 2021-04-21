@@ -69,4 +69,32 @@ export class WObject {
         });
     }
 }
+/**
+ * @class LightWObject
+ *
+ */
+export class LightWObject {
+    constructor() {
+        this.elements = [];
+        this.wobjName = this.constructor.name;
+    }
+    update() {
+        this.elements.forEach((element) => {
+            element.update();
+        });
+    }
+    reOrganize() { }
+    addElement(s) {
+        this.elements.push(s);
+    }
+    myDisplay(context) {
+        //override this method as your wish
+    }
+    display(context) {
+        this.myDisplay(context);
+        this.elements.forEach((element) => {
+            element.display(context);
+        });
+    }
+}
 //# sourceMappingURL=engine.js.map

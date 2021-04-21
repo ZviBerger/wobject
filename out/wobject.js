@@ -4,6 +4,7 @@ export class WOApp {
         this.context = this.canvas.getContext("2d");
         this.elements = [];
         this.updateRate = updateRate;
+        // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
     update() {
         this.elements.forEach((element) => {
@@ -12,12 +13,17 @@ export class WOApp {
     }
     reOrganize(position) {
         this.elements.forEach((element) => {
-            element.reOrganize(element.position);
+            try {
+                element.reOrganize();
+            }
+            catch (e) {
+                console.log("Error:", e);
+            }
         });
     }
     addElement(element) {
         this.elements.push(element);
-        this.reOrganize(element.position);
+        this.reOrganize();
     }
     display() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);

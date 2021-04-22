@@ -1,22 +1,13 @@
 //========================================================
 //library imports
 //========================================================
-import {
-  getRandomColor,
-  getRandomPosition,
-  getRandomNumber,
-  WOClock,
-} from "/out/utility.js";
+import { getRandomNumber, WOClock } from "/out/utility.js";
 import { WOApp } from "/out/wobject.js";
-import { WORect, WOCircle } from "/out/shapes.js";
 import { moveInCircle, moveInLine, accelerateInLine } from "/out/movements.js";
-import { WOContainer } from "/out/containers.js";
 import { WOButton } from "/out/buttons.js";
-import { WOCollidersContainer } from "/out/colliders.js";
-import { WOTextBox } from "/out/text.js";
-import { WObject, WOImage } from "../../out/index.js";
+import { WOPosition } from "/out/basics.js";
+import { WOImage, WOTextBox } from "../../out/index.js";
 import { SpaceShip } from "./src/SpaceShip.js";
-import { Explosion } from "./src/Explosion.js";
 import { Shot } from "./src/Shot.js";
 import { Astroid } from "./src/Asteroid.js";
 import { MemoryAndCollisionsManager } from "./src/GameWobject.js";
@@ -40,20 +31,18 @@ class SpaceGameController extends WOApp {
     this.level = 0;
     this.score = 0;
     this.life = 5;
-    this.shot = 50;
+    this.shot = 100;
     this.width = window.innerWidth - 20;
     this.height = window.innerHeight - 20;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
-    this.lifeClock = new WOClock(40);
+    this.lifeClock = new WOClock(80);
     this.gameOn = true;
-
     this.infoBar = new GameInfoBar(10, 10, 100, 600, "Spacer");
-
     this.background = new WOImage(
       -20,
       -20,
-      "https://i.pinimg.com/originals/85/9f/a9/859fa9f580f5130eea47680160ef704e.jpg",
+      "./assets/spacebackground.jpg",
       this.width + 100,
       this.height + 100
     );
@@ -87,25 +76,39 @@ class SpaceGameController extends WOApp {
   update() {
     this.infoBar.setText(this.level, this.score, this.life, this.shot);
     super.update();
+    if (!this.gameOn) return;
     if (this.life === 0) {
+      this.addElement(
+        new WOTextBox(
+          this.width / 2 - 300,
+          this.height / 2,
+          1,
+          1,
+          "#fff",
+          "Game Over",
+          "80px"
+        )
+      );
       this.gameOn = false;
       return;
     }
     if (this.memoManage.rectObjInsideFrame().length === 1) {
       this.nextLevel();
     }
-    console.log(this.lifeClock);
   }
+
   startOver() {
     this.level = 0;
     this.shot = this.level * 10;
-    this.fillAsteroids(this.shot);
+    this.fillAsteroids((this.level + 1) * 10);
+    this.lifeClock.restart();
   }
 
   nextLevel() {
     this.level += 1;
-    this.shot = this.level * 10;
-    this.fillAsteroids(this.shot);
+    this.shot += this.level * 50;
+    this.fillAsteroids((this.level + 1) * 10);
+    this.lifeClock.restart();
   }
 
   fillAsteroids(num) {
@@ -121,10 +124,31 @@ class SpaceGameController extends WOApp {
     }
   }
   initButtons() {
+    const actionFire = () => {
+      if (this.gameOn && this.shot > 0) {
+        const pos = this.spaceship.position;
+        const spaceWidth = this.spaceship.size.width;
+        this.shot -= 1;
+        const shot = new Shot(pos.x + spaceWidth / 2, pos.y, 50, 50, true);
+        shot.setMotionMethod(accelerateInLine(0, -2));
+        this.memoManage.addElement(shot);
+      }
+    };
+
+    const bomb = WOButton.add(
+      20,
+      this.height - 200,
+      60,
+      60,
+      "#fff",
+      "💥",
+      actionFire
+    );
+
     return new ButtonsController(
-      this.width - 120,
-      this.height - 100,
-      30,
+      this.width - 200,
+      this.height - 200,
+      60,
       WOButton,
       () => {
         this.gameOn && this.spaceship.setMotionMethod(moveInLine(0, -10));
@@ -138,16 +162,7 @@ class SpaceGameController extends WOApp {
       () => {
         this.gameOn && this.spaceship.setMotionMethod(moveInLine(-10, 0));
       },
-      () => {
-        if (this.gameOn && this.shot > 0) {
-          const pos = this.spaceship.position;
-          const spaceWidth = this.spaceship.size.width;
-          this.shot -= 1;
-          const shot = new Shot(pos.x + spaceWidth / 2, pos.y, 50, 50, true);
-          shot.setMotionMethod(accelerateInLine(0, -2));
-          this.memoManage.addElement(shot);
-        }
-      }
+      actionFire
     );
   }
 

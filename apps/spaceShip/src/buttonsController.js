@@ -47,11 +47,10 @@ export class ButtonsController {
     );
     up.text.setPosition(
       new WOPosition(
-        up.position.x + buttonSize * 0.2,
-        up.position.y + buttonSize * 0.7
+        up.position.x + buttonSize * 0.26,
+        up.position.y + buttonSize * 0.6
       )
     );
-    up.text.setFontSize("20px");
 
     const right = WOButton.add(
       x + buttonSize * 2,
@@ -68,7 +67,6 @@ export class ButtonsController {
         right.position.y + buttonSize * 0.7
       )
     );
-    right.text.setFontSize("20px");
 
     const down = WOButton.add(
       x + buttonSize,
@@ -85,7 +83,6 @@ export class ButtonsController {
         down.position.y + buttonSize * 0.7
       )
     );
-    down.text.setFontSize("20px");
 
     const left = WOButton.add(
       x,
@@ -102,6 +99,5 @@ export class ButtonsController {
         left.position.y + buttonSize * 0.7
       )
     );
-    left.text.setFontSize("20px");
   }
 }

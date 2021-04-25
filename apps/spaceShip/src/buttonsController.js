@@ -1,5 +1,3 @@
-import { WOPosition } from "/out/index.js";
-
 export class ButtonsController {
   constructor(
     x,

@@ -1,4 +1,4 @@
-import { WOImage, WOAnimation } from "../../out/index.js";
+import { WOImage, WOAnimation } from "../../../out/index.js";
 import { GameWObject } from "./GameWobject.js";
 
 export class ThrustAnim extends WOAnimation {

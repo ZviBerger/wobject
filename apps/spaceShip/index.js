@@ -8,9 +8,9 @@ import {
   moveInLine,
   accelerateInLine,
   stopAcceleration,
-} from "/out/movements.js";
+} from "../../out/movements.js";
 import { WOButton } from "../../out/buttons.js";
-import { WOPosition } from "/out/basics.js";
+import { WOPosition } from "../../out/basics.js";
 import { WOImage, WOTextBox } from "../../out/index.js";
 import { SpaceShip } from "./src/SpaceShip.js";
 import { Shot } from "./src/Shot.js";

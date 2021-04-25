@@ -9,12 +9,13 @@ interface Clickable {
   contain(x: number, y: number): boolean;
   pressedNow: boolean;
 }
-class WOInternalButton extends WORect implements Clickable {
+export class WOInternalButton extends WORect implements Clickable {
   onClick: ClickAction;
   id: number;
   pressedNow: boolean;
   clickedColor: string;
   normalColor: string;
+  hide: boolean;
   constructor(
     x: number,
     y: number,
@@ -30,6 +31,7 @@ class WOInternalButton extends WORect implements Clickable {
     this.pressedNow = false;
     this.clickedColor = adjustColor(this.color, -30);
     this.normalColor = this.color;
+    this.hide = false;
   }
   onClickMethod() {
     this.onClick && this.onClick();
@@ -37,8 +39,12 @@ class WOInternalButton extends WORect implements Clickable {
   contain(x: number, y: number): boolean {
     return this.frame.contain(x, y);
   }
+  setHide(hide: boolean) {
+    this.hide = hide;
+  }
 
   myDisplay(context: CanvasRenderingContext2D) {
+    if (this.hide) return;
     super.myDisplay(context);
     if (this.pressedNow) {
       this.color = this.clickedColor;
@@ -118,7 +124,10 @@ export class WOButton extends WObject {
 
   private checkWhenClicked(event: MouseEvent): void {
     WOButton.instance.elements.forEach((button: WOInternalButton) => {
-      if ((button.pressedNow = button.contain(event.offsetX, event.offsetY))) {
+      if (
+        !button.hide &&
+        (button.pressedNow = button.contain(event.offsetX, event.offsetY))
+      ) {
         const action = WOButton.instance.actionMap.get(button.id);
         action && action();
       }
@@ -127,6 +136,7 @@ export class WOButton extends WObject {
   private checkWhenTouched(event: TouchEvent): void {
     WOButton.instance.elements.forEach((button: WOInternalButton) => {
       if (
+        !button.hide &&
         (button.pressedNow = button.contain(
           event.touches[0].clientX,
           event.touches[0].clientY

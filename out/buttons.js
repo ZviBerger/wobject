@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { WObject } from "./engine.js";
 import { WORect } from "./shapes.js";
 import { adjustColor } from "./utility.js";
-class WOInternalButton extends WORect {
+export class WOInternalButton extends WORect {
     constructor(x, y, w, h, color, text, id) {
         super(x, y, w, h, color);
         this.id = id;
@@ -18,6 +18,7 @@ class WOInternalButton extends WORect {
         this.pressedNow = false;
         this.clickedColor = adjustColor(this.color, -30);
         this.normalColor = this.color;
+        this.hide = false;
     }
     onClickMethod() {
         this.onClick && this.onClick();
@@ -25,7 +26,12 @@ class WOInternalButton extends WORect {
     contain(x, y) {
         return this.frame.contain(x, y);
     }
+    setHide(hide) {
+        this.hide = hide;
+    }
     myDisplay(context) {
+        if (this.hide)
+            return;
         super.myDisplay(context);
         if (this.pressedNow) {
             this.color = this.clickedColor;
@@ -78,7 +84,8 @@ export class WOButton extends WObject {
     }
     checkWhenClicked(event) {
         WOButton.instance.elements.forEach((button) => {
-            if ((button.pressedNow = button.contain(event.offsetX, event.offsetY))) {
+            if (!button.hide &&
+                (button.pressedNow = button.contain(event.offsetX, event.offsetY))) {
                 const action = WOButton.instance.actionMap.get(button.id);
                 action && action();
             }
@@ -86,7 +93,8 @@ export class WOButton extends WObject {
     }
     checkWhenTouched(event) {
         WOButton.instance.elements.forEach((button) => {
-            if ((button.pressedNow = button.contain(event.touches[0].clientX, event.touches[0].clientY))) {
+            if (!button.hide &&
+                (button.pressedNow = button.contain(event.touches[0].clientX, event.touches[0].clientY))) {
                 const action = WOButton.instance.actionMap.get(button.id);
                 action && action();
             }

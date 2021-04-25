@@ -52,6 +52,9 @@ export class WObject {
             element.reOrganize(position !== null && position !== void 0 ? position : this.position);
         });
     }
+    clear() {
+        this.elements = [];
+    }
     addElement(s) {
         s.adoptPosition(this.position);
         this.elements.push(s);
@@ -86,6 +89,9 @@ export class LightWObject {
     reOrganize() { }
     addElement(s) {
         this.elements.push(s);
+    }
+    clear() {
+        this.elements = [];
     }
     myDisplay(context) {
         //override this method as your wish

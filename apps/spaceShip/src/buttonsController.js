@@ -10,6 +10,7 @@ export class ButtonsController {
     actionRight,
     actionDown,
     actionLeft,
+    actionMiddle,
     actionSpace
   ) {
     window.addEventListener("keydown", (event) => {
@@ -35,21 +36,15 @@ export class ButtonsController {
           break;
       }
     });
-    const color = "#ffffff17";
+    const color = "#343434";
     const up = WOButton.add(
       x + buttonSize,
       y - buttonSize,
       buttonSize,
       buttonSize,
       color,
-      "🢁",
+      "",
       actionUp
-    );
-    up.text.setPosition(
-      new WOPosition(
-        up.position.x + buttonSize * 0.26,
-        up.position.y + buttonSize * 0.6
-      )
     );
 
     const right = WOButton.add(
@@ -58,14 +53,8 @@ export class ButtonsController {
       buttonSize,
       buttonSize,
       color,
-      "🢂",
+      "",
       actionRight
-    );
-    right.text.setPosition(
-      new WOPosition(
-        right.position.x + buttonSize * 0.2,
-        right.position.y + buttonSize * 0.7
-      )
     );
 
     const down = WOButton.add(
@@ -74,14 +63,8 @@ export class ButtonsController {
       buttonSize,
       buttonSize,
       color,
-      "🢃",
+      "",
       actionDown
-    );
-    down.text.setPosition(
-      new WOPosition(
-        down.position.x + buttonSize * 0.2,
-        down.position.y + buttonSize * 0.7
-      )
     );
 
     const left = WOButton.add(
@@ -90,14 +73,18 @@ export class ButtonsController {
       buttonSize,
       buttonSize,
       color,
-      "🢀",
+      "",
       actionLeft
     );
-    left.text.setPosition(
-      new WOPosition(
-        left.position.x + buttonSize * 0.2,
-        left.position.y + buttonSize * 0.7
-      )
+
+    const middle = WOButton.add(
+      x + buttonSize,
+      y,
+      buttonSize,
+      buttonSize,
+      color,
+      "",
+      actionMiddle
     );
   }
 }

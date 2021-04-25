@@ -22,6 +22,7 @@ export class WOTextBox extends WObject {
     this.fontSize = fontSize;
   }
   display(context: CanvasRenderingContext2D) {
+    context.beginPath();
     context.fillStyle = this.color;
     context.fill();
     context.shadowColor = "#666565";
@@ -29,5 +30,6 @@ export class WOTextBox extends WObject {
     context.shadowBlur = 0;
     context.font = `${this.fontSize ?? "30px"} Courier New`;
     context.fillText(this.text, this.position.x, this.position.y);
+    context.stroke();
   }
 }

@@ -92,6 +92,36 @@ export class WORect extends WOShape {
     */
   }
 }
+
+export class WORoundedRect extends WORect {
+  borderRadius: number;
+
+  constructor(x, y, w, h, r, color) {
+    super(x, y, w, h, color);
+    this.borderRadius = r;
+  }
+  myDisplay(context) {
+    const x = this.position.x;
+    const y = this.position.y;
+    const w = this.size.width;
+    const h = this.size.height;
+    const r = this.borderRadius;
+    context.beginPath();
+    context.lineWidth = 1;
+    context.fillStyle = this.color;
+    console.log(this.color);
+    context.shadowColor = "#666565";
+    context.strokeStyle = this.color;
+    context.shadowBlur = 10;
+    context.moveTo(x + r, y);
+    context.arcTo(x + w, y, x + w, y + h, r);
+    context.arcTo(x + w, y + h, x, y + h, r);
+    context.arcTo(x, y + h, x, y, r);
+    context.arcTo(x, y, x + w, y, r);
+    context.closePath();
+    context.fill();
+  }
+}
 //===============================================================
 /**
  *@class WOCircle is a rectangle shape extends WOShape

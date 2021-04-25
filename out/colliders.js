@@ -36,6 +36,9 @@ export class WOCollidersContainer extends WObject {
     rectObjInsideFrame() {
         return this.elements.filter((wbj) => collideFrames(this.frame, wbj.frame));
     }
+    isFrameInside(frame) {
+        return collideFrames(this.frame, frame);
+    }
     update() {
         this.checkCollide();
         super.update();
@@ -50,7 +53,6 @@ export class WOCollidersContainer extends WObject {
         this.elements.forEach((wo1) => {
             this.elements.forEach((wo2) => {
                 if (wo1 !== wo2 && isCollide(wo1, wo2)) {
-                    console.log("Colliding!");
                     this.collisionManager.runActivity(wo1, wo2);
                 }
             });

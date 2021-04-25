@@ -13,6 +13,7 @@ export class WOTextBox extends WObject {
     }
     display(context) {
         var _a;
+        context.beginPath();
         context.fillStyle = this.color;
         context.fill();
         context.shadowColor = "#666565";
@@ -20,6 +21,7 @@ export class WOTextBox extends WObject {
         context.shadowBlur = 0;
         context.font = `${(_a = this.fontSize) !== null && _a !== void 0 ? _a : "30px"} Courier New`;
         context.fillText(this.text, this.position.x, this.position.y);
+        context.stroke();
     }
 }
 //# sourceMappingURL=text.js.map

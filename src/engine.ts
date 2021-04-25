@@ -6,6 +6,7 @@ export interface WebObject {
   addElement(s: WebObject): void;
   display(context: CanvasRenderingContext2D): void;
   reOrganize(position?: WOPosition): void;
+  clear(): void;
 }
 
 export class WObject implements WebObject {
@@ -77,6 +78,10 @@ export class WObject implements WebObject {
     });
   }
 
+  clear() {
+    this.elements = [];
+  }
+
   addElement(s: WObject) {
     s.adoptPosition(this.position);
     this.elements.push(s);
@@ -120,7 +125,9 @@ export class LightWObject implements WebObject {
   addElement(s: WebObject) {
     this.elements.push(s);
   }
-
+  clear() {
+    this.elements = [];
+  }
   myDisplay(context: CanvasRenderingContext2D) {
     //override this method as your wish
   }

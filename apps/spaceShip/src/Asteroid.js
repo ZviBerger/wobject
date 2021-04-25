@@ -24,6 +24,7 @@ export class Explodable extends GameWObject {
         this.position.y + this.size.height / 2
       )
     );
+    this.position = new WOPosition(-9999999, -9999999);
     this.addElement(this.explosion);
     this.exploded = true;
   }
@@ -41,11 +42,5 @@ export class Astroid extends Explodable {
     this.animation.position = this.position;
     this.animation.size = this.size;
     this.addElement(this.animation);
-  }
-
-  update() {
-    //  this.alive =  this.infinityLoop || !this.animation.hasFinished();
-
-    super.update();
   }
 }

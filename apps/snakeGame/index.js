@@ -1,14 +1,14 @@
 //========================================================
 //library imports
 //========================================================
-import { getRandomColor, getRandomPosition } from "/out/utility.js";
-import { WOApp } from "/out/wobject.js";
-import { WORect, WOCircle } from "/out/shapes.js";
-import { moveInCircle, moveInLine } from "/out/movements.js";
-import { WOContainer } from "/out/containers.js";
-import { WOButton } from "/out/buttons.js";
-import { WOCollidersContainer } from "/out/colliders.js";
-import { WOTextBox } from "/out/text.js";
+import { getRandomColor, getRandomPosition } from "../../out/utility.js";
+import { WOApp } from "../../out/wobject.js";
+import { WORect, WOCircle } from "../../out/shapes.js";
+import { moveInCircle, moveInLine } from "../../out/movements.js";
+import { WOContainer } from "../../out/containers.js";
+import { WOButton } from "../../out/buttons.js";
+import { WOCollidersContainer } from "../../out/colliders.js";
+import { WOTextBox } from "../../out/text.js";
 
 //========================================================
 //game imports

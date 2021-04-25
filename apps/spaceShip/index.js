@@ -1,10 +1,15 @@
 //========================================================
 //library imports
 //========================================================
-import { getRandomNumber, WOClock } from "/out/utility.js";
-import { WOApp } from "/out/wobject.js";
-import { moveInCircle, moveInLine, accelerateInLine } from "/out/movements.js";
-import { WOButton } from "/out/buttons.js";
+import { getRandomNumber, WOClock } from "../../out/utility.js";
+import { WOApp } from "../../out/wobject.js";
+import {
+  moveInCircle,
+  moveInLine,
+  accelerateInLine,
+  stopAcceleration,
+} from "/out/movements.js";
+import { WOButton } from "../../out/buttons.js";
 import { WOPosition } from "/out/basics.js";
 import { WOImage, WOTextBox } from "../../out/index.js";
 import { SpaceShip } from "./src/SpaceShip.js";
@@ -13,14 +18,16 @@ import { Astroid } from "./src/Asteroid.js";
 import { MemoryAndCollisionsManager } from "./src/GameWobject.js";
 import { ButtonsController } from "./src/buttonsController.js";
 import { GameInfoBar } from "./src/GameInfoBar.js";
+import { WOModal } from "../../out/modal.js";
 //========================================================
 
-import { collideMap, collideRectWithRect } from "/out/collideMethods.js";
+import { collideMap, collideRectWithRect } from "../../out/collideMethods.js";
 // this settings tell to collision system how to determent if those objects are collides
 //e.g. : use the co
 collideMap.set("Shot" + "Astroid", collideRectWithRect);
 collideMap.set("SpaceShip" + "Astroid", collideRectWithRect);
-//============================================================
+
+//=================================================================================
 /**
  * @class SpaceGameController
  * @param
@@ -34,6 +41,8 @@ class SpaceGameController extends WOApp {
     this.shot = 100;
     this.width = window.innerWidth - 20;
     this.height = window.innerHeight - 20;
+    this.gamePause = true;
+
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.lifeClock = new WOClock(80);
@@ -50,10 +59,20 @@ class SpaceGameController extends WOApp {
     this.spaceship = new SpaceShip(this.width / 4, this.height - 450, 100, 100);
 
     this.buttonsObj = WOButton.init(this.canvas); //init the WOButtons
+    // const text = new WOTextBox(10, 30, 10, 10, "#000", "help text!", "");
+    // this.helpModal = new WOModal(
+    //   this.width,
+    //   this.height,
+    //   600,
+    //   450,
+    //   25,
+    //   "#fff",
+    //   text
+    // );
     this.buttonsController = this.initButtons();
     this.memoManage = new MemoryAndCollisionsManager(
-      0,
-      0,
+      50,
+      50,
       this.width,
       this.height,
       "",
@@ -67,15 +86,18 @@ class SpaceGameController extends WOApp {
     this.addElement(this.memoManage);
     this.addElement(this.buttonsObj);
     this.addElement(this.infoBar);
+    //  this.addElement(this.helpModal);
 
     this.run();
     this.fillAsteroids(this.level * 10);
-    console.log(this.elements);
   }
 
+  //=================================================================================
   update() {
     this.infoBar.setText(this.level, this.score, this.life, this.shot);
+
     super.update();
+
     if (!this.gameOn) return;
     if (this.life === 0) {
       this.addElement(
@@ -92,25 +114,35 @@ class SpaceGameController extends WOApp {
       this.gameOn = false;
       return;
     }
-    if (this.memoManage.rectObjInsideFrame().length === 1) {
+
+    if (
+      this.memoManage.isFrameInside(this.spaceship.frame) &&
+      this.memoManage.rectObjInsideFrame().length === 1 //only the spaceship is inside screen...
+    ) {
       this.nextLevel();
     }
   }
 
+  //=================================================================================
   startOver() {
+    this.memoManage.clear();
     this.level = 0;
     this.shot = this.level * 10;
     this.fillAsteroids((this.level + 1) * 10);
     this.lifeClock.restart();
   }
 
+  //=================================================================================
   nextLevel() {
+    this.memoManage.clear();
+    this.memoManage.addElement(this.spaceship);
     this.level += 1;
     this.shot += this.level * 50;
     this.fillAsteroids((this.level + 1) * 10);
     this.lifeClock.restart();
   }
 
+  //=================================================================================
   fillAsteroids(num) {
     for (let i = 0; i < num; i++) {
       const y = getRandomNumber(0, this.height - 400);
@@ -123,52 +155,68 @@ class SpaceGameController extends WOApp {
       this.memoManage.addElement(astro);
     }
   }
+  //=================================================================================
   initButtons() {
     const actionFire = () => {
       if (this.gameOn && this.shot > 0) {
         const pos = this.spaceship.position;
         const spaceWidth = this.spaceship.size.width;
+        const spaceH = this.spaceship.size.height;
         this.shot -= 1;
-        const shot = new Shot(pos.x + spaceWidth / 2, pos.y, 50, 50, true);
+        const shot = new Shot(
+          pos.x - spaceWidth / 4,
+          pos.y - spaceH + 20,
+          50,
+          50,
+          true
+        );
         shot.setMotionMethod(accelerateInLine(0, -2));
         this.memoManage.addElement(shot);
       }
     };
 
-    const bomb = WOButton.add(
-      20,
-      this.height - 200,
-      60,
-      60,
-      "#fff",
-      "💥",
-      actionFire
-    );
-
+    WOButton.add(20, this.height - 200, 60, 60, "#343434", "", actionFire);
+    const factor = 0.7,
+      maxAccel = 15;
     return new ButtonsController(
       this.width - 200,
       this.height - 200,
       60,
       WOButton,
       () => {
-        this.gameOn && this.spaceship.setMotionMethod(moveInLine(0, -10));
+        this.gameOn &&
+          this.spaceship.setMotionMethod(
+            accelerateInLine(0, -factor, maxAccel)
+          );
       },
       () => {
-        this.gameOn && this.spaceship.setMotionMethod(moveInLine(10, 0));
+        this.gameOn &&
+          this.spaceship.setMotionMethod(accelerateInLine(factor, 0, maxAccel));
       },
       () => {
-        this.gameOn && this.spaceship.setMotionMethod(moveInLine(0, 10));
+        this.gameOn &&
+          this.spaceship.setMotionMethod(accelerateInLine(0, factor, maxAccel));
       },
       () => {
-        this.gameOn && this.spaceship.setMotionMethod(moveInLine(-10, 0));
+        this.gameOn &&
+          this.spaceship.setMotionMethod(
+            accelerateInLine(-factor, 0, maxAccel)
+          );
+      },
+      () => {
+        this.gameOn &&
+          this.spaceship.setMotionMethod(
+            stopAcceleration(factor, factor, maxAccel)
+          );
       },
       actionFire
     );
   }
 
+  //=================================================================================
   initCollideMap() {
     const actionMap = new Map();
-    //define the rules- what happening when to are collides
+    //define the rules- what happening when two are collides
     //Shot - Astroid
     actionMap.set("ShotAstroid", (shot, astroid) => {
       shot.setTimeToLeave();
@@ -187,7 +235,7 @@ class SpaceGameController extends WOApp {
 
     return actionMap;
   }
-
+  //=================================================================================
   start() {
     this.wobjectApp.run();
   }

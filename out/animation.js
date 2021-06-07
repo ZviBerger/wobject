@@ -1,9 +1,9 @@
 import { WObject, WOImage } from "./index.js";
 export class WOAnimation extends WObject {
-    constructor(x, y, w, h, framesNum, spriteSource, infinityLoop) {
+    constructor(x, y, w, h, framesNum, spriteSource, infinityLoop, initialFrame) {
         super(x, y, w, h);
         this.frames = new Array();
-        this.index = 0;
+        this.index = Number.isInteger(initialFrame) ? initialFrame : 0;
         this.loaded = false;
         this.frameNum = framesNum;
         this.animFinished = true;

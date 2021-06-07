@@ -37,6 +37,13 @@ export const getRandomNumber = (min: number, max: number) => {
   return Math.random() * (max - min) + min;
 };
 //======================================================================
+//getRandomInteger - get random integer in the range min-max
+//======================================================================
+
+export const getRandomInteger = (min: number, max: number) => {
+  return Math.floor(getRandomNumber(min, max));
+};
+//======================================================================
 //getRandomPosition - return a position in the range xMin-xMax, yMin-yMax
 //======================================================================
 

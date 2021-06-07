@@ -124,10 +124,7 @@ export class WOButton extends WObject {
 
   private checkWhenClicked(event: MouseEvent): void {
     WOButton.instance.elements.forEach((button: WOInternalButton) => {
-      if (
-        !button.hide &&
-        (button.pressedNow = button.contain(event.offsetX, event.offsetY))
-      ) {
+      if ((button.pressedNow = button.contain(event.offsetX, event.offsetY))) {
         const action = WOButton.instance.actionMap.get(button.id);
         action && action();
       }
@@ -136,7 +133,6 @@ export class WOButton extends WObject {
   private checkWhenTouched(event: TouchEvent): void {
     WOButton.instance.elements.forEach((button: WOInternalButton) => {
       if (
-        !button.hide &&
         (button.pressedNow = button.contain(
           event.touches[0].clientX,
           event.touches[0].clientY

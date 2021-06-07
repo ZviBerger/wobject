@@ -1,4 +1,4 @@
-import { WObject, WOImage } from "./index.js";
+import { WObject, WOImage, getRandomNumber } from "./index.js";
 
 export class WOAnimation extends WObject {
   frames: Array<WOImage>;
@@ -15,11 +15,12 @@ export class WOAnimation extends WObject {
     h: number,
     framesNum: number,
     spriteSource: string,
-    infinityLoop: boolean
+    infinityLoop: boolean,
+    initialFrame?: number
   ) {
     super(x, y, w, h);
     this.frames = new Array();
-    this.index = 0;
+    this.index = Number.isInteger(initialFrame) ? initialFrame : 0;
     this.loaded = false;
     this.frameNum = framesNum;
     this.animFinished = true;

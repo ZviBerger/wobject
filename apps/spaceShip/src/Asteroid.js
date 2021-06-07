@@ -1,11 +1,25 @@
-import { WOAnimation, WOPosition, WORect } from "../../../out/index.js";
+import {
+  WOAnimation,
+  WOPosition,
+  WORect,
+  getRandomNumber,
+} from "../../../out/index.js";
 import { GameWObject } from "./GameWobject.js";
 import { Explosion } from "./Explosion.js";
 
 export class AstroidAnim extends WOAnimation {
   //16 frames
   constructor(x, y, w, h, infinityLoop) {
-    super(x, y, w, h, 16, "assets/rock.png", infinityLoop);
+    super(
+      x,
+      y,
+      w,
+      h,
+      16,
+      "assets/rock.png",
+      infinityLoop,
+      getRandomNumber(0, 15)
+    );
   }
 }
 

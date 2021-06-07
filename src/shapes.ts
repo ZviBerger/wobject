@@ -96,11 +96,18 @@ export class WORect extends WOShape {
 export class WORoundedRect extends WORect {
   borderRadius: number;
 
-  constructor(x, y, w, h, r, color) {
+  constructor(
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    r: number,
+    color: string
+  ) {
     super(x, y, w, h, color);
     this.borderRadius = r;
   }
-  myDisplay(context) {
+  myDisplay(context: CanvasRenderingContext2D) {
     const x = this.position.x;
     const y = this.position.y;
     const w = this.size.width;

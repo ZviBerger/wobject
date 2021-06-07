@@ -1,4 +1,4 @@
-import { WOVerticalContainer, WOTextBox } from "/out/index.js";
+import { WOVerticalContainer, WOTextBox } from "../../../out/index.js";
 
 export class GameInfoBar extends WOVerticalContainer {
   constructor(x, y, w, h, title) {

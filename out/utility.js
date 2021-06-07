@@ -28,6 +28,12 @@ export const getRandomNumber = (min, max) => {
     return Math.random() * (max - min) + min;
 };
 //======================================================================
+//getRandomInteger - get random integer in the range min-max
+//======================================================================
+export const getRandomInteger = (min, max) => {
+    return Math.floor(getRandomNumber(min, max));
+};
+//======================================================================
 //getRandomPosition - return a position in the range xMin-xMax, yMin-yMax
 //======================================================================
 export const getRandomPosition = (xMin, xMax, yMin, yMax) => new WOPosition(getRandomNumber(xMin, xMax), getRandomNumber(yMin, yMax));

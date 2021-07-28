@@ -1,6 +1,6 @@
 <div  align="center">
 
-<img  align="center"  width="230"  src="assets/wobjectlogo.png" />
+<img  align="center"  width="230"  src="assets/wobject.png" />
 
 <h3>WObject - Web Object. </h3>
 <blockquote>Typescript, OOP, Canvas based library for building UI Apps and 2D Games.</blockquote>

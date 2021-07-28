@@ -15,9 +15,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["Wobject"] = factory();
+		exports["WObject"] = factory();
 	else
-		root["Wobject"] = factory();
+		root["WObject"] = factory();
 })(self, function() {
 return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";

@@ -1,5 +1,3 @@
-
-
 <div  align="center">
 
 <img  align="center"  width="230"  src="assets/wobjectlogo.png" />
@@ -14,23 +12,17 @@
 
 </a>
 
-
 <a  href="./LICENSE">
 
 <img  src="https://badgen.net/github/license/avkonst/hookstate?color=blue" />
 
 </a>
 
-
 </p>
 
 </div>
 
-  
-
 ## ⭐️ Features
-
-  
 
 - TypeScript
 - OOP
@@ -42,7 +34,9 @@
 - Auto Collision system
 - Extendable Shapes components
 - Buttons system, Images, Sprite Animations ...
+
 ## 📦 Installation
+
 ### npm
 
 ```
@@ -53,9 +47,8 @@ import WO from 'wobject'
 
 ```
 
-## 💎 Basic Use
+## 💎 How to use
 
- 
 ```
 
 //create the main app root
@@ -70,15 +63,52 @@ app.addElement(ButtonsObj);
 app.run();
 
 ```
+
+### 💣 Movements and Containers example
+
+```
+import WO from 'wobject'
+const app = new WO.Wobject.WOApp("myCanvas", 10);
+
+
+let rect = new WO.Shapes.WORect(0, 0, 50, 50, WO.Utils.getRandomColor());
+let rect1 = new WO.Shapes.WORect(0, 0, 50, 50, WO.Utils.getRandomColor());
+let rect2 = new WO.Shapes.WORect(0, 0, 50, 50, WO.Utils.getRandomColor());
+let rect3 = new WO.Shapes.WORect(0, 0, 50, 50,WO.Utils.getRandomColor());
+let rect4 = new WO.Shapes.WORect(0, 0, 50, 50,WO.Utils.getRandomColor());
+
+const container  = new WO.Containers.WOHorizontalContainer(
+    50,50,500,50,WO.Utils.getRandomColor())
+container.setMargin(40,0,0,0)
+
+container.addElement(rect);
+container.addElement(rect1);
+container.addElement(rect2);
+container.addElement(rect3);
+container.addElement(rect4);
+container.setMotionMethod(WO.Movements.moveInCircle(1,0.07))
+
+rect.setMotionMethod(WO.Movements.moveInCircle(6,0.07))
+rect1.setMotionMethod(WO.Movements.moveInCircle(5,0.07))
+rect2.setMotionMethod(WO.Movements.moveInCircle(4,0.07))
+rect3.setMotionMethod(WO.Movements.moveInCircle(3,0.07))
+rect4.setMotionMethod(WO.Movements.moveInCircle(2,0.07))
+
+app.addElement(container)
+app.run();
+
+```
+
 ## 🎮 What can you develop with WObject?
-  
+
 Check out this games that entirely have been build with WObject:
 
 [The SpaceShip Game](https://wobject.netlify.app/apps/spaceship/)
 
 [The Snake Game](https://wobject.netlify.app/apps/snakegame/)
 
-  [To the Source Code](./src/apps)
+[To the Source Code](./src/apps)
+
 ## 🚀 Run the examples
 
 ### npm
@@ -87,12 +117,9 @@ Check out this games that entirely have been build with WObject:
 npm run-script start
 ```
 
-### #In the browser  go to:
+### #In the browser go to:
+
 /spaceship
 /snake
 
-  
-
 ## ✅ Contributes are welcomed!
-
-  

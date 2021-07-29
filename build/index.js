@@ -1,6 +1,6 @@
 /*!
  * 
- *   wobject v1.0.4
+ *   wobject v1.0.6
  *   https://github.com/ZviBerger/Wobject
  *
  *   Copyright (c) Zvika Berger (https://github.com/ZviBerger) and project contributors.

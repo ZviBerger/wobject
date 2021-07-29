@@ -1,6 +1,6 @@
 {
   "name": "wobject",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "typescript, OOP, Canvas based library for building UI apps and small games",
   "main": "build/index.js",
   "types": "build/types/index.d.ts",

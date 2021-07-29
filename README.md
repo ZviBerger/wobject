@@ -93,7 +93,7 @@ app.addElement(container);
 app.run();
 ```
 
-[Play with the code](https://codesandbox.io/s/sharp-mayer-2es8p?file=/src/index.js)
+[Play with the code](https://codesandbox.io/s/fragrant-meadow-ho5n7?file=/src/index.js)
 
 ## 🎮 What can you develop with WObject?
 

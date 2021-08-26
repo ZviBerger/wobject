@@ -48,7 +48,7 @@ const app = new WO.Wobject.WOApp('myCanvas', 50);
 let rect = new WO.Shapes.WORect(0, 0, 50, 50, '#b30');
 
 // adding something to the tree (Rectangle wobject)
-app.addElement(ButtonsObj);
+app.addElement(rect);
 
 app.run();
 ```

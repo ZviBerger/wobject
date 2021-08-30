@@ -2,8 +2,8 @@
 
 <img  align="center"  width="430"  src="assets/wobject.png" />
 
-<h3>WObject - Web Object. </h3>
-<blockquote>Typescript, OOP, Canvas based library for building UI Apps and 2D Games.</blockquote>
+<h3>Tagless UIs. Turn <> into >< </h3>
+<blockquote>Typescript ,HTML Canvas based library for building UI apps with no tags.</blockquote>
 <p  align="center" >
 
 <a  href="./">

@@ -3,7 +3,7 @@
 <img  align="center"  width="430"  src="assets/wobject.png" />
 
 <h3>Tagless UIs. Turn <> into >< </h3>
-<blockquote>Typescript ,HTML Canvas based library for building UI apps with no tags.</blockquote>
+<blockquote>Typescript, HTML Canvas-based library for building UI apps with no tags.</blockquote>
 <p  align="center" >
 
 <a  href="./">
@@ -35,7 +35,6 @@
 npm i wobject
 
 import WO from 'wobject'
-
 ```
 
 ## 💎 How to use
@@ -97,7 +96,7 @@ app.run();
 
 ## 🎮 What can you develop with WObject?
 
-Check out this games that entirely have been build with WObject:
+Check out these games that entirely have been build with WObject:
 
 <img  align="center"  width="530"  src="assets/spaceship.png" />
 
